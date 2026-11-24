@@ -1,0 +1,2600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jurnal BSJP IHSG – Menu &amp; Evaluator HLC</title>
+<style>
+  :root {
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface-2: #f1f4f9;
+    --surface-3: #e7ecf4;
+    --border: #e5eaf2;
+    --border-strong: #cfd8e5;
+    --text: #16202e;
+    --text-muted: #768396;
+    --text-soft: #9aa5b5;
+    --nav-blue: #3f78e0;
+    --nav-blue-dark: #3367c9;
+    --accent: #3f78e0;
+    --accent-soft: rgba(63, 120, 224, 0.10);
+    --accent-border: rgba(63, 120, 224, 0.30);
+    --buy: #dc2626;
+    --buy-soft: rgba(220, 38, 38, 0.09);
+    --buy-border: rgba(220, 38, 38, 0.25);
+    --sell: #16a34a;
+    --sell-soft: rgba(22, 163, 74, 0.10);
+    --sell-border: rgba(22, 163, 74, 0.26);
+    --warn: #d97706;
+    --warn-soft: rgba(217, 119, 6, 0.10);
+    --warn-border: rgba(217, 119, 6, 0.28);
+    --bottom-bg: #ffffff;
+    --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.04);
+    --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.12);
+    --radius: 14px;
+    --radius-sm: 10px;
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    --bg: #0c1118;
+    --surface: #141c26;
+    --surface-2: #1a2431;
+    --surface-3: #223041;
+    --border: #232f3f;
+    --border-strong: #324358;
+    --text: #edf2f7;
+    --text-muted: #93a2b7;
+    --text-soft: #66758a;
+    --nav-blue: #295bb8;
+    --nav-blue-dark: #214a96;
+    --accent: #5b92f3;
+    --accent-soft: rgba(91, 146, 243, 0.14);
+    --accent-border: rgba(91, 146, 243, 0.32);
+    --buy: #f05252;
+    --buy-soft: rgba(240, 82, 82, 0.14);
+    --buy-border: rgba(240, 82, 82, 0.30);
+    --sell: #22c55e;
+    --sell-soft: rgba(34, 197, 94, 0.14);
+    --sell-border: rgba(34, 197, 94, 0.30);
+    --warn: #f59e0b;
+    --warn-soft: rgba(245, 158, 11, 0.14);
+    --warn-border: rgba(245, 158, 11, 0.30);
+    --bottom-bg: #121922;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+    --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.45);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .num { font-variant-numeric: tabular-nums; }
+  .hide { display: none !important; }
+
+  /* ==================== BLUE TOP MENU BAR (LIKE REFERENCE IMAGE) ==================== */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 25;
+    background: linear-gradient(180deg, var(--nav-blue) 0%, var(--nav-blue-dark) 100%);
+    color: #ffffff;
+    padding-top: env(safe-area-inset-top, 0px);
+    box-shadow: 0 2px 8px rgba(20, 46, 102, 0.14);
+  }
+  .header-top {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 12px 16px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .header-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+  }
+  .header-title {
+    margin: 0;
+    font-size: 1.12rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .header-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+    white-space: nowrap;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .header-cash-btn {
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 4px 9px;
+    text-align: right;
+    cursor: pointer;
+    line-height: 1.15;
+    font: inherit;
+  }
+  .header-cash-btn span { display: block; font-size: 0.64rem; opacity: 0.85; }
+  .header-cash-btn b { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .header-icon-btn {
+    width: 34px;
+    height: 34px;
+    border: 0;
+    background: transparent;
+    color: #ffffff;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .header-icon-btn:active { background: rgba(255, 255, 255, 0.16); }
+
+  /* Sub-tabs inside blue header (like Indeks | Saham | Reksa Dana) */
+  .subtabs {
+    max-width: 520px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .subtabs button {
+    border: 0;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.78);
+    font: inherit;
+    font-size: 0.86rem;
+    font-weight: 500;
+    padding: 10px 6px 11px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.15s;
+    white-space: nowrap;
+  }
+  .subtabs button.on {
+    color: #ffffff;
+    font-weight: 600;
+  }
+  .subtabs button.on::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: 0;
+    height: 3px;
+    background: #ffffff;
+    border-radius: 3px 3px 0 0;
+  }
+
+  /* ==================== CONTAINER & CLEAN LIST SECTIONS ==================== */
+  .wrap {
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 0 12px;
+  }
+
+  .section-block {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 16px;
+    margin-bottom: 8px;
+  }
+  .section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .section-title {
+    margin: 0;
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .section-link {
+    border: 0;
+    background: none;
+    color: var(--accent);
+    font: inherit;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  /* Category Filter Pills (like Top Value / Top Volume) */
+  .pill-bar {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 10px;
+    scrollbar-width: none;
+  }
+  .pill-bar::-webkit-scrollbar { display: none; }
+  .pill-btn {
+    flex: none;
+    height: 31px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .pill-btn.on {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+    font-weight: 600;
+  }
+
+  /* Clean Hairline List Item (matching reference list aesthetics) */
+  .list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .list-item:last-child { border-bottom: 0; padding-bottom: 2px; }
+  .list-item.clickable { cursor: pointer; }
+  .list-left { min-width: 0; }
+  .list-code {
+    font-size: 0.96rem;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .list-sub {
+    font-size: 0.77rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .list-right {
+    text-align: right;
+    flex-shrink: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .list-price { font-size: 0.96rem; font-weight: 700; color: var(--text); }
+  .list-delta { font-size: 0.77rem; font-weight: 500; margin-top: 2px; }
+
+  /* Badges */
+  .bdg {
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .bdg.ok { color: var(--sell); background: var(--sell-soft); border-color: var(--sell-border); }
+  .bdg.wait { color: var(--warn); background: var(--warn-soft); border-color: var(--warn-border); }
+  .bdg.full { color: var(--buy); background: var(--buy-soft); border-color: var(--buy-border); }
+  .bdg.info { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-border); }
+
+  /* Form Controls */
+  .row {
+    display: grid;
+    grid-template-columns: 56px 1fr 26px;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .row > label { color: var(--text-muted); font-size: 0.84rem; font-weight: 500; }
+  .row > .u { color: var(--text-muted); font-size: 0.78rem; text-align: right; }
+
+  input, select, textarea {
+    font: inherit;
+    color: var(--text);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    height: 40px;
+    padding: 0 11px;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  textarea { height: auto; padding: 10px 11px; resize: vertical; }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+  }
+  input[readonly] { background: var(--surface-2); color: var(--text-muted); font-weight: 600; }
+
+  .st { display: flex; gap: 6px; }
+  .st input { text-align: center; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .st button {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border: 1px solid var(--border);
+    background: var(--surface-2);
+    color: var(--text);
+    border-radius: var(--radius-sm);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .st button:active { background: var(--surface-3); }
+
+  .tot {
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 12px;
+    font-weight: 700;
+    font-size: 0.94rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .mx {
+    display: grid;
+    grid-template-columns: 1fr 84px;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .mx button {
+    height: 36px;
+    border: 1px solid var(--accent-border);
+    border-radius: var(--radius-sm);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .mx select { height: 36px; font-size: 0.82rem; font-weight: 600; }
+
+  .ord {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .ord button {
+    height: 46px;
+    border: 0;
+    border-radius: 11px;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  #obuy { background: var(--buy); }
+  #osell { background: var(--sell); }
+
+  /* Two-Column Inputs */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 label, .field label {
+    display: block;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .stat-tile {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 10px;
+  }
+  .stat-tile .k { font-size: 0.68rem; color: var(--text-muted); display: block; margin-bottom: 2px; }
+  .stat-tile .v { font-size: 0.88rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+  /* Key-Value Row */
+  .r {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.86rem;
+  }
+  .r:last-child { border-bottom: 0; padding-bottom: 2px; }
+  .r span:first-child { color: var(--text-muted); }
+  .r b { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .g { color: var(--sell) !important; }
+  .b { color: var(--buy) !important; }
+  .a { color: var(--warn) !important; }
+  .ac { color: var(--accent) !important; }
+  .note { font-size: 0.74rem; color: var(--text-muted); margin: 8px 0 0; line-height: 1.45; }
+  .emp { color: var(--text-muted); text-align: center; padding: 18px 0; margin: 0; font-size: 0.85rem; }
+
+  /* Callout / Verdict Boxes */
+  .verdict-box {
+    border-radius: 11px;
+    padding: 11px 12px;
+    margin-top: 10px;
+    font-size: 0.79rem;
+    line-height: 1.45;
+    border: 1px solid var(--border);
+  }
+  .verdict-box.tp { background: var(--sell-soft); border-color: var(--sell-border); }
+  .verdict-box.avg { background: var(--accent-soft); border-color: var(--accent-border); }
+  .verdict-box.close { background: var(--warn-soft); border-color: var(--warn-border); }
+  .verdict-title { font-weight: 700; font-size: 0.83rem; margin-bottom: 3px; }
+
+  /* Buttons */
+  .btn {
+    height: 36px;
+    border: 0;
+    border-radius: 9px;
+    background: var(--accent);
+    color: #fff;
+    font: inherit;
+    font-size: 0.81rem;
+    font-weight: 600;
+    padding: 0 13px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-sell { background: var(--sell); color: #fff; }
+  .btn-warn { background: var(--warn); color: #fff; }
+  .btn-ghost { background: var(--surface-2); color: var(--text); border: 1px solid var(--border); }
+  .btn-danger-outline { background: transparent; border: 1px solid var(--buy-border); color: var(--buy); }
+  .btn-sm { height: 31px; font-size: 0.75rem; padding: 0 10px; border-radius: 8px; }
+  .btn-full { width: 100%; height: 42px; font-size: 0.86rem; }
+
+  .chips { display: flex; gap: 5px; }
+  .chips button {
+    flex: 1;
+    height: 30px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface-2);
+    color: var(--text);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .xbtn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 7px;
+    min-width: 26px;
+    height: 26px;
+    font: inherit;
+    cursor: pointer;
+    padding: 0 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Tables */
+  .sc { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.8rem; font-variant-numeric: tabular-nums; }
+  th {
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 0.71rem;
+    padding: 9px 7px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  td { padding: 10px 7px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+  tr:last-child td { border-bottom: 0; }
+  th:nth-child(n+4), td:nth-child(n+4) { text-align: right; }
+  .bt th:first-child, .bt td:first-child { color: var(--text-muted); font-weight: 600; width: 34%; }
+  .bt th:nth-child(n+2), .bt td:nth-child(n+2) { text-align: right; }
+
+  .tag {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 5px;
+    color: #fff;
+    display: inline-block;
+  }
+  .tb { background: var(--buy); }
+  .ts { background: var(--sell); }
+  table.ht th, table.ht td { padding: 9px 6px; font-size: 0.73rem; }
+  table.ht th:last-child, table.ht td:last-child { text-align: left; }
+
+  /* ==================== 5-ITEM BOTTOM NAVIGATION (LIKE REFERENCE IMAGE) ==================== */
+  nav.bottom-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 30;
+    background: var(--bottom-bg);
+    border-top: 1px solid var(--border);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .nav-inner {
+    max-width: 520px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  nav.bottom-nav button {
+    border: 0;
+    background: none;
+    color: var(--text-muted);
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 500;
+    padding: 8px 2px 9px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    position: relative;
+  }
+  nav.bottom-nav button.on {
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .nav-badge {
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 17px);
+    background: var(--buy);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    min-width: 15px;
+    height: 15px;
+    padding: 0 4px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Bottom Sheet Modal */
+  .sheet-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(10, 15, 22, 0.55);
+    backdrop-filter: blur(3px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 10px;
+  }
+  .sheet-card {
+    width: 100%;
+    max-width: 500px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: var(--shadow-md);
+    margin-bottom: env(safe-area-inset-bottom, 0px);
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  .sheet-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .sheet-head h3 { margin: 0; font-size: 0.98rem; font-weight: 700; }
+
+  #toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(80px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%);
+    background: var(--text);
+    color: var(--bg);
+    padding: 9px 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.8rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+    max-width: 90%;
+    text-align: center;
+    z-index: 50;
+    box-shadow: var(--shadow-md);
+  }
+</style>
+</head>
+<body>
+
+  <!-- ==================== BLUE TOP MENU HEADER (REFERENCE LAYOUT) ==================== -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="header-title-wrap">
+        <h1 class="header-title" id="ttl">Beranda</h1>
+        <span class="header-count" id="tcnt">0/3</span>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="header-cash-btn" id="btn-cash-quick" title="Ketuk untuk isi/ubah modal cash">
+          <span>Cash</span>
+          <b id="hc2">Rp0</b>
+        </button>
+        <button type="button" class="header-icon-btn" id="btn-search-jump" aria-label="Buka Order Saham" title="Input Order Saham">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        </button>
+        <button type="button" class="header-icon-btn" id="btn-theme" aria-label="Ganti Tema" title="Ganti Tema">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </div>
+    <!-- 3 Underlined Header Sub-Tabs (Dynamic per Bottom Menu) -->
+    <div class="subtabs" id="subtabs"></div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ==================== TAB 1: BERANDA ==================== -->
+    <section id="v-home">
+      <!-- Sub 0: Ringkasan BSJP -->
+      <div id="home-sub-0">
+        <!-- Welcome Strip if Empty -->
+        <div id="welcome-strip" class="section-block hide">
+          <div class="section-head" style="margin-bottom:4px">
+            <h2 class="section-title">Mulai Jurnal BSJP</h2>
+          </div>
+          <p class="note" style="margin:0 0 10px">Isi modal awal cash atau muat contoh BSJP untuk mencoba alur High/Low/Close, Volume 2K, Avg 1&times;, dan Jual Close.</p>
+          <div class="grid2">
+            <button type="button" class="btn" id="btn-quick-capital">Isi Modal Cash</button>
+            <button type="button" class="btn btn-ghost" id="btn-load-demo">Muat Demo BSJP</button>
+          </div>
+        </div>
+
+        <!-- Ringkasan Saldo & Performa -->
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Ringkasan BSJP</h2>
+            <button type="button" class="section-link" id="btn-home-to-order">+ Order Baru</button>
+          </div>
+          <div class="grid3">
+            <div class="stat-tile">
+              <span class="k">Trading Limit</span>
+              <span class="v" id="home-lim">Rp0</span>
+            </div>
+            <div class="stat-tile">
+              <span class="k">Posisi Aktif</span>
+              <span class="v" id="home-pos-cnt">0 Emiten</span>
+            </div>
+            <div class="stat-tile">
+              <span class="k">Gain/Loss Hari Ini</span>
+              <span class="v" id="home-gl-today">Rp0</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Positions Clean List -->
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Pantauan Posisi (Cek H/L/C)</h2>
+            <button type="button" class="section-link" id="btn-home-to-port">Lihat Semua</button>
+          </div>
+          <div class="pill-bar" id="home-filter-pills">
+            <button type="button" class="pill-btn on" data-hf="all">Semua</button>
+            <button type="button" class="pill-btn" data-hf="tp">Siap Done TP (&ge;2%)</button>
+            <button type="button" class="pill-btn" data-hf="avg">Perlu Avg (1&times;)</button>
+            <button type="button" class="pill-btn" data-hf="close">Jual di Close</button>
+          </div>
+          <div id="home-pos-list"></div>
+        </div>
+      </div>
+
+      <!-- Sub 1: Simulasi HLC Cepat -->
+      <div id="home-sub-1" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Cek Cepat High / Low / Close</h2>
+            <span class="bdg info">Simulasi</span>
+          </div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div><label for="sim-buy">Harga Beli / Avg (Rp)</label><input id="sim-buy" inputmode="numeric" value="1.000"></div>
+            <div><label for="sim-lot">Jumlah Lot</label><input id="sim-lot" inputmode="numeric" value="20"></div>
+            <div><label for="sim-high">High (Rp)</label><input id="sim-high" inputmode="numeric" value="1.020"></div>
+            <div><label for="sim-low">Low (Rp)</label><input id="sim-low" inputmode="numeric" value="990"></div>
+            <div><label for="sim-close">Close (Rp)</label><input id="sim-close" inputmode="numeric" value="1.015"></div>
+            <div><label for="sim-vol">Volume (Lot)</label><input id="sim-vol" inputmode="numeric" value="2.500"></div>
+          </div>
+          <div class="grid2" style="margin-bottom:10px">
+            <div>
+              <label for="sim-stage">Status Posisi</label>
+              <select id="sim-stage">
+                <option value="0">Hari 1 (Belum Avg)</option>
+                <option value="1">Besoknya (Sudah Avg 1&times;)</option>
+              </select>
+            </div>
+            <div>
+              <label>Target +2% (BEI)</label>
+              <input id="sim-tp2" readonly>
+            </div>
+          </div>
+          <div id="sim-verdict"></div>
+        </div>
+      </div>
+
+      <!-- Sub 2: Aturan BSJP -->
+      <div id="home-sub-2" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Aturan Eksekusi BSJP</h2>
+            <span class="bdg ok">3 Langkah</span>
+          </div>
+          <div class="list-item">
+            <div class="list-left">
+              <div class="list-code">1. Cek High &amp; Volume 2K <span class="bdg ok">Done TP</span></div>
+              <div class="list-sub" style="white-space:normal">Jika harga <b>High &ge; +2%</b> dengan <b>Volume &ge; 2K (2.000 lot)</b>, langsung <b>Done TP</b> jual di target +2%.</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="list-left">
+              <div class="list-code">2. Kurang dari 2% &amp; Vol Kurang <span class="bdg info">AVG 1&times;</span></div>
+              <div class="list-sub" style="white-space:normal">Jika harga High <b>&lt; +2%</b> dan Volume kurang, lakukan <b>AVG Down 1 kali</b> saja untuk turunkan harga rata-rata.</div>
+            </div>
+          </div>
+          <div class="list-item">
+            <div class="list-left">
+              <div class="list-code">3. Besok Tidak Mencapai 2% <span class="bdg wait">Jual Close</span></div>
+              <div class="list-sub" style="white-space:normal">Setelah AVG Down 1&times;, jika besoknya harga High masih <b>tidak mencapai +2%</b>, langsung <b>Jual di harga Close</b>.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: ORDER ==================== -->
+    <section id="v-order" class="hide">
+      <!-- Sub 0: Tiket Order -->
+      <div id="order-sub-0">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Tiket Order BSJP</h2>
+            <span id="order-pos-hint" class="bdg info hide"></span>
+          </div>
+
+          <div class="row">
+            <label for="kode">Kode</label>
+            <input id="kode" placeholder="mis. BBCA" maxlength="8" autocomplete="off" style="text-transform:uppercase;font-weight:700;letter-spacing:0.03em">
+            <span class="u" id="tick-chip">BEI</span>
+          </div>
+
+          <div class="row">
+            <label for="price">Price</label>
+            <div class="st">
+              <button type="button" id="pm" aria-label="Kurangi 1 tick">−</button>
+              <input id="price" inputmode="numeric" placeholder="0">
+              <button type="button" id="pp" aria-label="Tambah 1 tick">+</button>
+            </div>
+            <span class="u">Rp</span>
+          </div>
+
+          <div class="row">
+            <label for="vol">Vol</label>
+            <div class="st">
+              <button type="button" id="vm" aria-label="Kurangi 1 lot">−</button>
+              <input id="vol" inputmode="numeric" placeholder="0">
+              <button type="button" id="vp" aria-label="Tambah 1 lot">+</button>
+            </div>
+            <span class="u">lot</span>
+          </div>
+
+          <div class="row" style="margin-bottom:12px">
+            <label>Total</label>
+            <div class="tot" id="total">0</div>
+            <span class="u">Rp</span>
+          </div>
+
+          <div class="mx">
+            <button type="button" id="bl">Max Limit 0 Lot</button>
+            <select id="pl" aria-label="Persentase Limit"></select>
+          </div>
+          <div class="mx">
+            <button type="button" id="bc">Max Cash 0 Lot</button>
+            <select id="pc" aria-label="Persentase Cash"></select>
+          </div>
+
+          <div class="ord">
+            <button type="button" id="obuy">BUY</button>
+            <button type="button" id="osell">SELL</button>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:0.78rem">
+            <span style="color:var(--text-muted)">Status Order</span>
+            <b id="stat">–</b>
+          </div>
+        </div>
+
+        <!-- Immediate Post-Buy +2% Instruction -->
+        <div id="order-guide" class="section-block hide"></div>
+      </div>
+
+      <!-- Sub 1: Harga High / Low / Close (HLC) — Replaces Petunjuk Target Averaging -->
+      <div id="order-sub-1" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Harga High / Low / Close (HLC)</h2>
+            <span class="bdg info" id="ohlc-ticker-badge">Order</span>
+          </div>
+          <p class="note" style="margin:0 0 10px">Masukkan harga High, Low, Close, dan Volume saham untuk menentukan status Done TP (+2% &amp; Vol 2K), AVG Down 1&times;, atau Jual di Close.</p>
+          <div class="grid2" style="margin-bottom:10px">
+            <div><label for="o-high">Harga High (Rp)</label><input id="o-high" inputmode="numeric" placeholder="0"></div>
+            <div><label for="o-low">Harga Low (Rp)</label><input id="o-low" inputmode="numeric" placeholder="0"></div>
+            <div><label for="o-close">Harga Close (Rp)</label><input id="o-close" inputmode="numeric" placeholder="0"></div>
+            <div><label for="o-vol">Volume (Lot)</label><input id="o-vol" inputmode="numeric" placeholder="2.000"></div>
+          </div>
+          <div class="chips" style="margin-bottom:8px">
+            <button type="button" id="o-vol-2k">Vol &ge; 2K (2.000)</button>
+            <button type="button" id="o-vol-lt2k">Vol Kurang (&lt; 2K)</button>
+          </div>
+          <div id="o-hlc-verdict"></div>
+        </div>
+      </div>
+
+      <!-- Sub 2: Rincian Biaya Beli -->
+      <div id="order-sub-2" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Rincian Biaya Beli &amp; Impas</h2>
+          </div>
+          <div class="r"><span>Value</span><b id="d1">Rp0</b></div>
+          <div class="r"><span>Broker Fee</span><b id="d2">Rp0</b></div>
+          <div class="r"><span>VAT</span><b id="d3">Rp0</b></div>
+          <div class="r"><span>Levy</span><b id="d4">Rp0</b></div>
+          <div class="r"><span>Total bayar</span><b id="d5">Rp0</b></div>
+          <div class="r"><span>Sisa cash</span><b id="d6">Rp0</b></div>
+          <div class="r"><span>Harga impas (BEP jual)</span><b id="d7">Rp0</b></div>
+          <div class="r"><span>Target Jual +2% (BEI)</span><b id="d8" class="g">Rp0</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: PORTOFOLIO (HLC EVALUATOR) ==================== -->
+    <section id="v-port" class="hide">
+      <div class="section-block" style="padding-bottom:10px">
+        <div class="section-head" style="margin-bottom:6px">
+          <h2 class="section-title">Portofolio &amp; Evaluasi HLC</h2>
+          <span class="bdg info" id="port-total-badge">0 Aktif</span>
+        </div>
+        <div id="pft" class="grid3 hide"></div>
+      </div>
+
+      <div id="port-guide" class="section-block hide"></div>
+      <div id="pf"></div>
+    </section>
+
+    <!-- ==================== TAB 4: TRANSAKSI (GAIN/LOSS) ==================== -->
+    <section id="v-gl" class="hide">
+      <div id="gl-sub-0">
+        <div class="section-block">
+          <div class="grid3">
+            <div class="stat-tile">
+              <span class="k">Net Gain/Loss</span>
+              <span class="v" id="gl-kpi-net">Rp0</span>
+            </div>
+            <div class="stat-tile">
+              <span class="k">Win Rate</span>
+              <span class="v" id="gl-kpi-wr">0%</span>
+            </div>
+            <div class="stat-tile">
+              <span class="k">Transaksi</span>
+              <span class="v" id="gl-kpi-cnt">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-block" style="padding:0">
+          <div class="sc">
+            <table>
+              <thead>
+                <tr><th>Code</th><th>Date</th><th>B/S</th><th>Gain/Loss</th><th>%</th><th></th></tr>
+              </thead>
+              <tbody id="gl"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="section-block" style="padding:0">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--border)">
+            <b style="font-size:0.9rem">Riwayat Transaksi</b>
+            <div style="display:flex;gap:6px">
+              <button type="button" id="btn-export-csv" class="btn btn-ghost btn-sm">CSV</button>
+              <button type="button" id="hall" class="btn btn-sm">Lihat Semua</button>
+            </div>
+          </div>
+          <div class="sc">
+            <table class="ht">
+              <thead>
+                <tr><th>Tgl</th><th>Jenis</th><th>Kode</th><th>Harga</th><th>Lot</th><th>Nilai</th><th>Keterangan</th></tr>
+              </thead>
+              <tbody id="hl"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="gl-sub-1" class="hide">
+        <div class="section-block" style="padding:0">
+          <div class="sc">
+            <table class="bt">
+              <thead>
+                <tr><th style="text-align:left">Breakdown Biaya</th><th>BUY</th><th>SELL</th><th>TOTAL</th></tr>
+              </thead>
+              <tbody id="bk"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 5: AKUN ==================== -->
+    <section id="v-acc" class="hide">
+      <!-- Sub 0: Saldo & Limit -->
+      <div id="acc-sub-0">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Saldo &amp; Trading Limit</h2>
+            <span class="bdg info">Growin’</span>
+          </div>
+          <div class="grid2">
+            <div><label for="cash0">Modal awal cash (Rp)</label><input id="cash0" inputmode="numeric" placeholder="Isi modal awal" autocomplete="off"></div>
+            <div><label for="cash">Cash saat ini</label><input id="cash" readonly></div>
+            <div><label for="hc">Haircut portofolio (%)</label><input id="hc" inputmode="decimal" value="30"></div>
+            <div><label for="lim">Trading limit saat ini</label><input id="lim" readonly></div>
+            <div><label for="mt">Maks transaksi / hari</label><input id="mt" inputmode="numeric" value="3"></div>
+            <div><label for="acc-preset">Preset Sekuritas</label>
+              <select id="acc-preset">
+                <option value="growin">Growin’ (0,078%)</option>
+                <option value="std">Online Std (0,15%/0,25%)</option>
+                <option value="ipot">IPOT (0,19%/0,29%)</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+          </div>
+          <p class="note">Limit = 3 &times; net cash + 2 &times; nilai portofolio setelah haircut.</p>
+          <p class="note b" id="tlw"></p>
+        </div>
+      </div>
+
+      <!-- Sub 1: Fee Akun -->
+      <div id="acc-sub-1" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Rincian Fee Sekuritas</h2>
+          </div>
+          <div class="grid2">
+            <div><label for="fb">Broker fee beli (%)</label><input id="fb" inputmode="decimal"></div>
+            <div><label for="fj">Broker fee jual (%)</label><input id="fj" inputmode="decimal"></div>
+            <div><label for="fv">VAT dari broker (%)</label><input id="fv" inputmode="decimal"></div>
+            <div><label for="fl">Levy (%)</label><input id="fl" inputmode="decimal"></div>
+            <div><label for="ft">PPh jual (%)</label><input id="ft" inputmode="decimal"></div>
+          </div>
+          <p class="note">Default sesuai fee Growin’ Mandiri Sekuritas (Broker 0,078%, VAT 11%, Levy 0,0433%, PPh jual 0,1%).</p>
+        </div>
+      </div>
+
+      <!-- Sub 2: Penyimpanan & Backup -->
+      <div id="acc-sub-2" class="hide">
+        <div class="section-block">
+          <div class="section-head">
+            <h2 class="section-title">Penyimpanan &amp; Cadangan Data</h2>
+          </div>
+          <p class="note" id="sync" style="margin:0 0 8px">Memeriksa penyimpanan…</p>
+          <textarea id="bk2" rows="3" placeholder="Cadangan JSON muncul di sini. Tempel lalu tekan Pulihkan." style="font-size:0.74rem"></textarea>
+          <div class="grid2" style="margin-top:8px">
+            <button type="button" class="btn" id="bkc">Salin Cadangan</button>
+            <button type="button" class="btn btn-ghost" id="bkr">Pulihkan</button>
+          </div>
+          <div class="grid2" style="margin-top:8px">
+            <button type="button" class="btn btn-ghost" id="btn-acc-demo">Muat Demo BSJP</button>
+            <button type="button" class="btn btn-danger-outline" id="rst">Hapus Semua Data</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== 5-ITEM BOTTOM NAVIGATION (MATCHING REFERENCE IMAGE) ==================== -->
+  <nav class="bottom-nav" id="nav" aria-label="Menu Utama">
+    <div class="nav-inner">
+      <button type="button" data-v="home" class="on">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9.5"/></svg>
+        <span>Beranda</span>
+      </button>
+      <button type="button" data-v="order">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <span>Order</span>
+      </button>
+      <button type="button" data-v="port">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+        <span>Portofolio</span>
+        <span id="nav-port-badge" class="nav-badge hide">0</span>
+      </button>
+      <button type="button" data-v="gl">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3 21 7l-4 4"/><path d="M21 7H9"/><path d="M7 21l-4-4 4-4"/><path d="M3 17h12"/></svg>
+        <span>Transaksi</span>
+      </button>
+      <button type="button" data-v="acc">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16a1 1 0 0 1 1 1v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a1 1 0 0 1 1-1Z"/><path d="M7 9h10M7 13h6M7 17h4"/></svg>
+        <span>Akun</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Quick Capital Sheet Modal -->
+  <div id="modal-cap" class="sheet-backdrop hide">
+    <div class="sheet-card">
+      <div class="sheet-head">
+        <h3>Isi Modal Awal Cash (Rp)</h3>
+        <button type="button" class="xbtn" id="close-cap">&times;</button>
+      </div>
+      <p class="note" style="margin:0 0 10px">Masukkan modal cash RDN Anda untuk menghitung trading limit dan lot maksimal.</p>
+      <input id="cap-input" inputmode="numeric" placeholder="Contoh: 20.000.000" style="font-weight:700;font-size:1rem">
+      <div class="chips" style="margin:8px 0 12px" id="cap-chips">
+        <button type="button" data-val="5000000">5 Jt</button>
+        <button type="button" data-val="10000000">10 Jt</button>
+        <button type="button" data-val="25000000">25 Jt</button>
+        <button type="button" data-val="50000000">50 Jt</button>
+      </div>
+      <button type="button" class="btn btn-full" id="save-cap">Simpan Modal Cash</button>
+    </div>
+  </div>
+
+  <!-- Quick Sell Sheet Modal (Done TP / Jual di Close) -->
+  <div id="modal-sell" class="sheet-backdrop hide">
+    <div class="sheet-card">
+      <div class="sheet-head">
+        <h3 id="ms-title">Konfirmasi Jual</h3>
+        <button type="button" class="xbtn" id="close-sell">&times;</button>
+      </div>
+      <input type="hidden" id="ms-idx">
+      <input type="hidden" id="ms-tag">
+      <div class="grid2" style="margin-bottom:10px">
+        <div><label for="ms-price">Harga Jual (Rp)</label><input id="ms-price" inputmode="numeric" style="font-weight:700"></div>
+        <div><label for="ms-lot">Lot Dijual</label><input id="ms-lot" inputmode="numeric" style="font-weight:700"></div>
+      </div>
+      <div class="stat-tile" style="margin-bottom:12px">
+        <div class="r" style="padding:4px 0"><span>Modal Posisi</span><b id="ms-basis">Rp0</b></div>
+        <div class="r" style="padding:4px 0"><span>Hasil Jual Bersih</span><b id="ms-net">Rp0</b></div>
+        <div class="r" style="padding:4px 0;border:0"><span>Estimasi Untung / Rugi</span><b id="ms-gl">Rp0</b></div>
+      </div>
+      <div class="grid2">
+        <button type="button" class="btn btn-ghost" id="ms-to-order">Kirim ke Order</button>
+        <button type="button" class="btn btn-sell" id="ms-exec">Eksekusi Jual</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  const $ = id => document.getElementById(id);
+  const nf = new Intl.NumberFormat('id-ID', { maximumFractionDigits: 0 });
+  const rp = v => (v < 0 ? '-' : '') + 'Rp' + nf.format(Math.abs(Math.round(v)));
+  const fa = v => 'Rp' + new Intl.NumberFormat('id-ID', { maximumFractionDigits: 1 }).format(v);
+  const pcn = v => (v >= 0 ? '+' : '') + v.toFixed(2).replace('.', ',') + '%';
+  const num = s => {
+    s = String(s || '').trim();
+    if (!s) return 0;
+    let ng = 0;
+    if (s[0] === '-') { ng = 1; s = s.slice(1); }
+    if (s.includes(',')) s = s.replace(/\./g, '').replace(',', '.');
+    else if (/^\d{1,3}(\.\d{3})+$/.test(s)) s = s.replace(/\./g, '');
+    const v = parseFloat(s);
+    return isNaN(v) ? 0 : (ng ? -v : v);
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const tick = p => p < 200 ? 1 : p < 500 ? 2 : p < 2000 ? 5 : p < 5000 ? 10 : 25;
+  const tUp = p => { if (!p || p <= 0) return 0; const t = tick(p); return Math.ceil(p / t - 1e-9) * t; };
+  const kd = () => $('kode').value.trim().toUpperCase();
+
+  const DF = { b: 0.078, j: 0.078, v: 11, l: 0.0433, t: 0.1 };
+  const STORAGE_KEY = 'gw_bsjp_hlc_v4';
+
+  let HL = false, CD = null, cT, tt, ov = 0, ovt;
+  let MX = [0, 0];
+  let HALL = false;
+  let pendingBuyAfterCap = false;
+  let activeTab = 'home';
+  let activeSub = { home: 0, order: 0, port: 0, gl: 0, acc: 0 };
+  let homeFilter = 'all';
+
+  let ST = {
+    c0: 0,
+    h: 30,
+    mt: 3,
+    f: Object.assign({}, DF),
+    pos: [],
+    tx: [],
+    lastGuide: null,
+    theme: 'light',
+    ts: 0
+  };
+
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('gw_bsjp_v3') || localStorage.getItem('gw2');
+    if (raw) {
+      const r = JSON.parse(raw);
+      HL = true;
+      ST = Object.assign(ST, r);
+      ST.f = Object.assign({}, DF, r.f || {});
+      ST.pos = Array.isArray(r.pos) ? r.pos : [];
+      ST.tx = Array.isArray(r.tx) ? r.tx : [];
+    }
+  } catch (e) {}
+
+  // ==================== THEME ====================
+  function applyTheme(t) {
+    ST.theme = t === 'dark' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', ST.theme);
+  }
+  applyTheme(ST.theme);
+
+  $('btn-theme').onclick = () => {
+    applyTheme(ST.theme === 'dark' ? 'light' : 'dark');
+    save();
+    toast(ST.theme === 'dark' ? 'Tema Gelap aktif' : 'Tema Terang aktif');
+  };
+
+  // ==================== TOAST & PERSISTENCE ====================
+  function toast(m) {
+    const t = $('toast');
+    t.textContent = m;
+    t.style.opacity = 1;
+    clearTimeout(tt);
+    tt = setTimeout(() => { t.style.opacity = 0; }, 2600);
+  }
+
+  function setSync(t, c) {
+    const e = $('sync');
+    if (e) {
+      e.textContent = t;
+      e.className = 'note ' + (c || '');
+    }
+  }
+
+  function save() {
+    ov = 0;
+    ST.ts = Date.now();
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ST)); } catch (e) {}
+    cloudSave();
+  }
+
+  function cloudSave() {
+    if (!CD) return;
+    clearTimeout(cT);
+    cT = setTimeout(() => {
+      google.script.run
+        .withSuccessHandler(() => setSync('Tersimpan di akun Google Anda (' + new Date().toLocaleTimeString('id-ID') + ')', 'g'))
+        .withFailureHandler(() => setSync('Gagal menyimpan ke Google. Data aman di browser ini', 'b'))
+        .saveState(JSON.stringify(ST));
+    }, 600);
+  }
+
+  function cloudInit() {
+    if (!(window.google && google.script && google.script.run)) {
+      setSync('Mode Lokal: data tersimpan otomatis di browser perangkat ini.', 'ac');
+      return;
+    }
+    google.script.run
+      .withSuccessHandler(r => {
+        CD = true;
+        let cs = null;
+        try { cs = r ? JSON.parse(r) : null; } catch (e) {}
+        if (cs) {
+          if (HL && ST.ts > (cs.ts || 0)) {
+            cloudSave();
+          } else {
+            ST = Object.assign({ c0: 0, h: 30, mt: 3, pos: [], tx: [], lastGuide: null, theme: 'light' }, cs);
+            ST.f = Object.assign({}, DF, cs.f || {});
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(ST)); } catch (e) {}
+            applyTheme(ST.theme);
+            loadInputs();
+            refresh();
+          }
+        } else if (ST.c0 || ST.pos.length || ST.tx.length) {
+          cloudSave();
+        }
+        setSync('Tersimpan di akun Google Anda', 'g');
+      })
+      .withFailureHandler(() => setSync('Gagal memuat dari Google. Data tetap di browser ini', 'a'))
+      .loadState();
+  }
+
+  // ==================== FEE, BALANCE & HLC RULE ENGINE ====================
+  function fees(val, s) {
+    const f = ST.f;
+    const bf = Math.round(val * (s === 'B' ? f.b : f.j) / 100);
+    const vat = Math.round(bf * f.v / 100);
+    const lv = Math.round(val * f.l / 100);
+    const tax = s === 'S' ? Math.round(val * f.t / 100) : 0;
+    return { bf, vat, lv, tax, tot: bf + vat + lv + tax };
+  }
+
+  function rate(s) {
+    const f = ST.f;
+    return (s === 'B' ? f.b : f.j) / 100 * (1 + f.v / 100) + f.l / 100 + (s === 'S' ? f.t / 100 : 0);
+  }
+
+  function bal() {
+    let c = ST.c0 || 0;
+    ST.tx.forEach(x => { c += x.cash; });
+    const pv = ST.pos.reduce((s, x) => s + x.lot * 100 * (x.close || x.now || 0), 0);
+    const h = Math.min(Math.max(ST.h || 0, 0), 100) / 100;
+    return { c, pv, l: Math.max(0, 3 * Math.max(c, 0) + 2 * pv * (1 - h)) };
+  }
+
+  function copyText(str, okMsg) {
+    const fb = () => {
+      const a = document.createElement('textarea');
+      a.value = str;
+      a.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(a);
+      a.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) {}
+      a.remove();
+      toast(ok ? okMsg : 'Disalin: ' + str);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(str).then(() => toast(okMsg)).catch(fb);
+    } else {
+      fb();
+    }
+  }
+
+  /**
+   * Evaluates BSJP rule strictly from High, Low, Close, Volume (2K threshold), and avgCount:
+   * - If avgCount === 0 (Entry Awal):
+   *   - High >= +2% AND Vol >= 2000 (2K) -> DONE TP
+   *   - High >= +2% AND Vol < 2000 -> DONE TP (optional note Vol < 2K) / atau AVG
+   *   - High < +2% (dengan Vol kurang) -> AVG DOWN 1 KALI
+   * - If avgCount >= 1 (Hari berikutnya setelah AVG 1x):
+   *   - High >= +2% -> DONE TP (dari harga Avg baru)
+   *   - High < +2% -> JUAL DI HARGA CLOSE (tidak boleh AVG lagi)
+   */
+  function evaluateHLC(baseAvgPrice, netCostPerShare, lot, high, low, close, volLot, avgCount) {
+    const rs = rate('S');
+    const tp2Gross = tUp(baseAvgPrice * 1.02);
+    const tp2Net = tUp(netCostPerShare * 1.02 / (1 - rs));
+    const pctHigh = baseAvgPrice > 0 && high > 0 ? ((high - baseAvgPrice) / baseAvgPrice) * 100 : 0;
+    const pctLow = baseAvgPrice > 0 && low > 0 ? ((low - baseAvgPrice) / baseAvgPrice) * 100 : 0;
+    const pctClose = baseAvgPrice > 0 && close > 0 ? ((close - baseAvgPrice) / baseAvgPrice) * 100 : 0;
+    const hit2Pct = high > 0 && (pctHigh >= 2 || high >= tp2Gross);
+    const volOk = volLot >= 2000;
+
+    let action = 'wait'; // 'tp' | 'avg' | 'close'
+    let title = '';
+    let desc = '';
+
+    if (avgCount >= 1) {
+      // Sudah AVG 1x -> Besoknya: kalau >= 2% Done TP, kalau tidak mencapai 2% -> Jual di Close
+      if (hit2Pct) {
+        action = 'tp';
+        title = 'DONE TP (+2% dari Avg Tercapai)';
+        desc = `High Rp${nf.format(high)} (${pcn(pctHigh)}) mencapai target +2% dari Avg baru. Eksekusi jual TP!`;
+      } else {
+        action = 'close';
+        title = 'Besok Tidak Mencapai 2% → Jual di Close';
+        desc = `Sudah AVG 1× dan High hari ini (${pcn(pctHigh)}) belum mencapai +2%. Sesuai aturan, jual di harga Close Rp${nf.format(close || 0)}.`;
+      }
+    } else {
+      // Belum pernah AVG
+      if (hit2Pct && volOk) {
+        action = 'tp';
+        title = 'DONE TP (+2% & Vol ≥ 2K)';
+        desc = `High Rp${nf.format(high)} (${pcn(pctHigh)}) ≥ +2% dengan Volume ${nf.format(volLot)} lot (≥ 2K). Langsung jual TP!`;
+      } else if (hit2Pct && !volOk) {
+        action = 'tp';
+        title = 'High ≥ +2% (Vol < 2K)';
+        desc = `High mencapai ${pcn(pctHigh)}, namun Volume ${nf.format(volLot)} lot (< 2K). Disarankan amankan profit (Done TP) atau AVG 1× jika ingin ikut syarat Vol 2K.`;
+      } else {
+        action = 'avg';
+        title = 'Kurang dari 2% → AVG Down 1 Kali';
+        desc = `High Rp${nf.format(high)} (${pcn(pctHigh)}) < +2% (Vol ${nf.format(volLot)} lot). Lakukan AVG Down 1×, lalu besok pantau target +2% dari Avg baru.`;
+      }
+    }
+
+    return {
+      tp2Gross,
+      tp2Net,
+      pctHigh,
+      pctLow,
+      pctClose,
+      hit2Pct,
+      volOk,
+      action,
+      title,
+      desc
+    };
+  }
+
+  // ==================== HEADER & 5-TAB NAVIGATION ====================
+  const MENU_CONFIG = {
+    home: { title: 'Beranda', subs: ['Ringkasan', 'Cek HLC', 'Aturan BSJP'] },
+    order: { title: 'Order', subs: ['Tiket Order', 'Harga HLC', 'Rincian Fee'] },
+    port: { title: 'Portofolio', subs: ['Semua Posisi', 'Done TP', 'AVG / Close'] },
+    gl: { title: 'Transaksi', subs: ['Hari Ini', 'Semua', 'Breakdown Fee'] },
+    acc: { title: 'Akun', subs: ['Saldo & Limit', 'Fee Sekuritas', 'Cadangan'] }
+  };
+
+  function renderSubtabs() {
+    const cfg = MENU_CONFIG[activeTab];
+    $('ttl').textContent = cfg.title;
+    $('subtabs').innerHTML = cfg.subs.map((lbl, idx) =>
+      `<button type="button" class="${activeSub[activeTab] === idx ? 'on' : ''}" data-sub="${idx}">${lbl}</button>`
+    ).join('');
+  }
+
+  function show(v, subIdx) {
+    activeTab = v;
+    if (subIdx !== undefined) activeSub[v] = subIdx;
+
+    ['home', 'order', 'port', 'gl', 'acc'].forEach(k => {
+      $('v-' + k).classList.toggle('hide', k !== v);
+    });
+    document.querySelectorAll('#nav button').forEach(b => {
+      b.classList.toggle('on', b.dataset.v === v);
+    });
+
+    renderSubtabs();
+    applySubView();
+    window.scrollTo(0, 0);
+  }
+
+  function applySubView() {
+    const idx = activeSub[activeTab] || 0;
+    if (activeTab === 'home') {
+      [0, 1, 2].forEach(i => $('home-sub-' + i).classList.toggle('hide', i !== idx));
+      if (idx === 1) updateStandaloneHlc();
+    } else if (activeTab === 'order') {
+      [0, 1, 2].forEach(i => $('order-sub-' + i).classList.toggle('hide', i !== idx));
+      if (idx === 1) updateOrderHlc();
+    } else if (activeTab === 'port') {
+      rpos2();
+    } else if (activeTab === 'gl') {
+      $('gl-sub-0').classList.toggle('hide', idx === 2);
+      $('gl-sub-1').classList.toggle('hide', idx !== 2);
+      rgl();
+      rhis();
+    } else if (activeTab === 'acc') {
+      [0, 1, 2].forEach(i => $('acc-sub-' + i).classList.toggle('hide', i !== idx));
+    }
+  }
+
+  $('subtabs').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-sub]');
+    if (!btn) return;
+    activeSub[activeTab] = +btn.dataset.sub;
+    renderSubtabs();
+    applySubView();
+  });
+
+  $('nav').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-v]');
+    if (btn) show(btn.dataset.v);
+  });
+
+  $('btn-search-jump').onclick = () => { show('order', 0); setTimeout(() => $('kode').focus(), 40); };
+  $('btn-home-to-order').onclick = () => show('order', 0);
+  $('btn-home-to-port').onclick = () => show('port', 0);
+
+  // ==================== ORDER CALCULATOR & HLC ====================
+  [10, 25, 50, 75, 100].forEach(p => {
+    ['pl', 'pc'].forEach(id => {
+      const o = document.createElement('option');
+      o.value = p;
+      o.textContent = p + '%';
+      if ((p === 100 && id === 'pl') || (p === 50 && id === 'pc')) o.selected = true;
+      $(id).appendChild(o);
+    });
+  });
+
+  function calc() {
+    const k = kd();
+    const existing = k ? ST.pos.find(x => x.k === k) : null;
+    const hint = $('order-pos-hint');
+    if (existing) {
+      const ga = (existing.g || existing.lot * 100 * existing.avg) / (existing.lot * 100);
+      hint.textContent = `${nf.format(existing.lot)} lot · Avg ${fa(ga)}`;
+      hint.classList.remove('hide');
+    } else {
+      hint.classList.add('hide');
+    }
+    $('ohlc-ticker-badge').textContent = k || 'Order';
+
+    const h = num($('price').value);
+    const lot = num($('vol').value);
+    $('tick-chip').textContent = h > 0 ? `Rp${tick(h)}` : 'BEI';
+
+    const rb = rate('B'), rs = rate('S'), b = bal();
+    const val = lot * 100 * h;
+    const f = fees(val, 'B');
+    const tf = val + f.tot;
+    const per = h * 100 * (1 + rb);
+
+    $('total').textContent = nf.format(val);
+    const ml = per ? Math.max(0, Math.floor(b.l * $('pl').value / 100 / per)) : 0;
+    const mc = per ? Math.max(0, Math.floor(Math.max(b.c, 0) * $('pc').value / 100 / per)) : 0;
+    MX = [ml, mc];
+    $('bl').textContent = 'Max Limit ' + nf.format(ml) + ' Lot';
+    $('bc').textContent = 'Max Cash ' + nf.format(mc) + ' Lot';
+
+    const set = (id, t, c) => { const e = $(id); e.textContent = t; if (c !== undefined) e.className = c; };
+    set('d1', rp(val));
+    set('d2', rp(f.bf));
+    set('d3', rp(f.vat));
+    set('d4', rp(f.lv));
+    set('d5', rp(tf));
+    set('d6', rp(b.c - tf), b.c - tf < 0 ? 'b' : '');
+    set('d7', h ? rp(tUp(h * (1 + rb) / (1 - rs))) : 'Rp0');
+    set('d8', h ? rp(tUp(h * (1 + rb) * 1.02 / (1 - rs))) : 'Rp0', 'g');
+
+    if (!lot || !h) set('stat', '–', '');
+    else if (tf > b.l) set('stat', 'Melebihi trading limit', 'b');
+    else if (tf > b.c) set('stat', 'Pakai trading limit (T+2)', 'a');
+    else set('stat', 'Order bisa dilakukan', 'g');
+
+    if (activeTab === 'order' && activeSub.order === 1) updateOrderHlc();
+  }
+
+  function updateOrderHlc() {
+    const k = kd();
+    const existing = k ? ST.pos.find(x => x.k === k) : null;
+    const h = num($('price').value);
+    const buyPrice = existing ? (existing.g || existing.lot * 100 * existing.avg) / (existing.lot * 100) : h;
+    const netCost = existing ? existing.avg : h * (1 + rate('B'));
+    const lot = existing ? existing.lot : num($('vol').value);
+    const avgCount = existing ? (existing.avgCount || 0) : 0;
+
+    const high = num($('o-high').value);
+    const low = num($('o-low').value);
+    const close = num($('o-close').value);
+    const volLot = num($('o-vol').value);
+
+    const out = $('o-hlc-verdict');
+    if (!buyPrice) {
+      out.innerHTML = `<div class="verdict-box">Isi <b>Price</b> di Tiket Order (atau pilih kode saham di Portofolio) untuk menghitung evaluasi High / Low / Close.</div>`;
+      return;
+    }
+    const ev = evaluateHLC(buyPrice, netCost, lot, high, low, close, volLot, avgCount);
+    const cls = ev.action === 'tp' ? 'tp' : ev.action === 'avg' ? 'avg' : 'close';
+    out.innerHTML = `
+      <div class="grid3" style="margin-top:8px">
+        <div class="stat-tile"><span class="k">High</span><span class="v ${ev.pctHigh >= 2 ? 'g' : ''}">${pcn(ev.pctHigh)}</span></div>
+        <div class="stat-tile"><span class="k">Low</span><span class="v b">${pcn(ev.pctLow)}</span></div>
+        <div class="stat-tile"><span class="k">Close</span><span class="v ${ev.pctClose >= 0 ? 'g' : 'b'}">${pcn(ev.pctClose)}</span></div>
+      </div>
+      <div class="verdict-box ${cls}">
+        <div class="verdict-title">${ev.title}</div>
+        <div>${ev.desc}</div>
+        <div style="margin-top:6px;font-weight:600">Target +2%: ${rp(ev.tp2Gross)} (bersih ${rp(ev.tp2Net)})</div>
+      </div>
+    `;
+  }
+
+  function updateStandaloneHlc() {
+    const buy = num($('sim-buy').value);
+    const lot = Math.max(1, Math.floor(num($('sim-lot').value)));
+    const high = num($('sim-high').value);
+    const low = num($('sim-low').value);
+    const close = num($('sim-close').value);
+    const volLot = num($('sim-vol').value);
+    const avgCount = +$('sim-stage').value;
+
+    const netCost = buy * (1 + rate('B'));
+    const ev = evaluateHLC(buy, netCost, lot, high, low, close, volLot, avgCount);
+    $('sim-tp2').value = buy ? nf.format(ev.tp2Gross) + ' (bersih ' + nf.format(ev.tp2Net) + ')' : '0';
+
+    const cls = ev.action === 'tp' ? 'tp' : ev.action === 'avg' ? 'avg' : 'close';
+    $('sim-verdict').innerHTML = `
+      <div class="grid3">
+        <div class="stat-tile"><span class="k">High</span><span class="v ${ev.pctHigh >= 2 ? 'g' : ''}">${pcn(ev.pctHigh)}</span></div>
+        <div class="stat-tile"><span class="k">Low</span><span class="v b">${pcn(ev.pctLow)}</span></div>
+        <div class="stat-tile"><span class="k">Close</span><span class="v ${ev.pctClose >= 0 ? 'g' : 'b'}">${pcn(ev.pctClose)}</span></div>
+      </div>
+      <div class="verdict-box ${cls}">
+        <div class="verdict-title">${ev.title}</div>
+        <div>${ev.desc}</div>
+      </div>
+    `;
+  }
+
+  ['sim-buy', 'sim-lot', 'sim-high', 'sim-low', 'sim-close', 'sim-vol', 'sim-stage'].forEach(id => {
+    $(id).addEventListener('input', updateStandaloneHlc);
+    $(id).addEventListener('change', updateStandaloneHlc);
+  });
+
+  ['o-high', 'o-low', 'o-close', 'o-vol'].forEach(id => {
+    $(id).addEventListener('input', updateOrderHlc);
+  });
+  $('o-vol-2k').onclick = () => { $('o-vol').value = '2.500'; updateOrderHlc(); };
+  $('o-vol-lt2k').onclick = () => { $('o-vol').value = '1.200'; updateOrderHlc(); };
+
+  function maxClick(i) {
+    const n = MX[i];
+    $('vol').value = nf.format(n);
+    calc();
+    copyText(String(n), 'Disalin: ' + n + ' lot. Tinggal paste di Growin’');
+  }
+  $('bl').onclick = () => maxClick(0);
+  $('bc').onclick = () => maxClick(1);
+  $('pp').onclick = () => { const p = num($('price').value); $('price').value = nf.format(p + tick(p)); calc(); };
+  $('pm').onclick = () => { const p = num($('price').value); $('price').value = nf.format(Math.max(1, p - tick(Math.max(1, p - 1)))); calc(); };
+  $('vp').onclick = () => { $('vol').value = nf.format(num($('vol').value) + 1); calc(); };
+  $('vm').onclick = () => { $('vol').value = nf.format(Math.max(0, num($('vol').value) - 1)); calc(); };
+
+  // ==================== BUY / SELL EXECUTION ====================
+  function executeBuy(k, h, n, noteLabel, volLotVal) {
+    if (!lim()) return false;
+    if (!k) { $('kode').focus(); toast('Isi kode saham dulu'); return false; }
+    if (!h || n <= 0) { toast('Isi harga dan lot dulu'); return false; }
+    if (!ST.c0) {
+      pendingBuyAfterCap = true;
+      openCapModal();
+      return false;
+    }
+
+    const val = n * 100 * h;
+    const f = fees(val, 'B');
+    const cost = val + f.tot;
+    const b = bal();
+    if (cost > b.l) { toast('Melebihi trading limit'); return false; }
+
+    let p = ST.pos.find(x => x.k === k);
+    let isAvg = false;
+    if (p) {
+      if ((p.avgCount || 0) >= 1) {
+        toast(`${k} sudah AVG Down 1 kali. Aturan: besok tidak capai +2% jual di Close!`);
+      }
+      isAvg = true;
+      const tc = p.lot * 100 * p.avg + cost;
+      p.g = (p.g || p.lot * 100 * p.avg) + val;
+      p.lot += n;
+      p.avg = tc / (p.lot * 100);
+      p.high = h;
+      p.low = h;
+      p.close = h;
+      p.now = h;
+      p.avgCount = (p.avgCount || 0) + 1;
+      if (volLotVal !== undefined) p.volLot = volLotVal;
+    } else {
+      p = {
+        k,
+        lot: n,
+        avg: cost / (n * 100),
+        g: val,
+        now: h,
+        high: h,
+        low: h,
+        close: h,
+        volLot: 2000,
+        avgCount: 0,
+        avgLotCustom: n,
+        avgPriceCustom: 0,
+        boughtAt: Date.now()
+      };
+      ST.pos.push(p);
+    }
+
+    const rs = rate('S');
+    const ga = p.g / (p.lot * 100);
+    const targetGross = tUp(ga * 1.02);
+    const targetNet = tUp(p.avg * 1.02 / (1 - rs));
+    const estProfit = p.lot * 100 * targetNet * (1 - rs) - (p.lot * 100 * p.avg);
+
+    ST.lastGuide = {
+      k, lot: p.lot, avg: p.avg, ga,
+      targetGross, targetNet, estProfit,
+      isAvg, avgCount: p.avgCount, ts: Date.now()
+    };
+
+    ST.tx.unshift({
+      t: Date.now(), k, s: 'B', lot: n, val,
+      bf: f.bf, vat: f.vat, lv: f.lv, tax: 0, cash: -cost, gl: 0, pct: 0,
+      note: noteLabel || (isAvg ? `AVG ${p.avgCount}×` : 'Entry')
+    });
+
+    save();
+    refresh();
+    toast((isAvg ? `AVG ${k} (1×) berhasil! ` : `BUY ${k} berhasil! `) + 'Target jual +2%: Rp' + nf.format(targetNet));
+    return true;
+  }
+
+  function executeSell(k, h, n, noteLabel) {
+    if (!lim()) return false;
+    if (!k) { $('kode').focus(); toast('Isi kode saham dulu'); return false; }
+    if (!h || n <= 0) { toast('Isi harga dan lot dulu'); return false; }
+
+    const p = ST.pos.find(x => x.k === k);
+    if (!p) { toast(k + ' belum ada di portofolio'); return false; }
+    if (n > p.lot) { toast('Lot ' + k + ' hanya ' + nf.format(p.lot)); return false; }
+
+    const val = n * 100 * h;
+    const f = fees(val, 'S');
+    const net = val - f.tot;
+    const basis = n * 100 * p.avg;
+    const gl = net - basis;
+
+    p.g = (p.g || p.lot * 100 * p.avg) * (1 - n / p.lot);
+    p.lot -= n;
+    p.close = h;
+    p.now = h;
+    if (p.lot <= 0) {
+      ST.pos = ST.pos.filter(x => x !== p);
+      if (ST.lastGuide && ST.lastGuide.k === k) ST.lastGuide = null;
+    }
+
+    ST.tx.unshift({
+      t: Date.now(), k, s: 'S', lot: n, val,
+      bf: f.bf, vat: f.vat, lv: f.lv, tax: f.tax, cash: net, gl,
+      pct: basis ? (gl / basis) * 100 : 0,
+      note: noteLabel || (gl >= 0 ? 'Done TP' : 'Jual di Close')
+    });
+
+    $('price').value = '';
+    $('vol').value = '';
+    save();
+    refresh();
+    toast('SELL ' + k + ' selesai. ' + (gl >= 0 ? '+' : '') + rp(gl));
+    return true;
+  }
+
+  $('obuy').onclick = () => executeBuy(kd(), num($('price').value), Math.floor(num($('vol').value)));
+  $('osell').onclick = () => executeSell(kd(), num($('price').value), Math.floor(num($('vol').value)));
+
+  // ==================== POST-BUY PETUNJUK JUAL +2% ====================
+  function renderGuides() {
+    const g = ST.lastGuide;
+    const targets = [$('order-guide'), $('port-guide')];
+    if (!g) {
+      targets.forEach(el => el.classList.add('hide'));
+      return;
+    }
+    const html = `
+      <div class="section-head" style="margin-bottom:6px">
+        <h2 class="section-title g">${g.isAvg ? `AVG ${esc(g.k)} (${g.avgCount}×) — Besok Pantau +2%` : `Petunjuk Jual +2%: ${esc(g.k)}`}</h2>
+        <button type="button" class="xbtn" data-dismiss-guide="1">&times;</button>
+      </div>
+      <div class="stat-tile" style="display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--sell-soft);border-color:var(--sell-border)">
+        <div>
+          <div style="font-size:0.72rem;color:var(--text-muted)">Pasang Jual +2% (Bersih)</div>
+          <div class="num g" style="font-size:1.05rem;font-weight:800">${rp(g.targetNet)} <span style="font-size:0.78rem">(+${rp(g.estProfit)})</span></div>
+          <div style="font-size:0.71rem;color:var(--text-muted)">Avg ${fa(g.ga)} (${nf.format(g.lot)} lot) &middot; Kotor +2%: ${rp(g.targetGross)}</div>
+        </div>
+        <button type="button" class="btn btn-sell btn-sm" data-copy-price="${g.targetNet}">Salin</button>
+      </div>
+    `;
+    targets.forEach(el => {
+      el.innerHTML = html;
+      el.classList.remove('hide');
+    });
+  }
+
+  document.addEventListener('click', e => {
+    const dis = e.target.closest('[data-dismiss-guide]');
+    if (dis) { ST.lastGuide = null; save(); renderGuides(); return; }
+    const cp = e.target.closest('[data-copy-price]');
+    if (cp) copyText(cp.dataset.copyPrice, 'Harga jual Rp' + nf.format(cp.dataset.copyPrice) + ' disalin');
+  });
+
+  // ==================== HOME & PORTFOLIO HLC ENGINE ====================
+  function renderHome() {
+    const b = bal();
+    $('home-lim').textContent = rp(b.l);
+    $('home-pos-cnt').textContent = `${ST.pos.length} Emiten`;
+
+    const today = ds(Date.now());
+    const todaySells = ST.tx.filter(x => x.s === 'S' && ds(x.t) === today);
+    const todayGl = todaySells.reduce((s, x) => s + x.gl, 0);
+    const glEl = $('home-gl-today');
+    glEl.textContent = (todayGl > 0 ? '+' : '') + rp(todayGl);
+    glEl.className = 'v ' + (todayGl > 0 ? 'g' : todayGl < 0 ? 'b' : '');
+
+    const listEl = $('home-pos-list');
+    if (!ST.pos.length) {
+      listEl.innerHTML = `<p class="emp">Belum ada saham aktif. Ketuk <b>+ Order Baru</b> untuk mulai BSJP.</p>`;
+      return;
+    }
+
+    const items = ST.pos.map((x, i) => {
+      const ga = (x.g || x.lot * 100 * x.avg) / (x.lot * 100);
+      const close = x.close || x.now || Math.round(ga);
+      const high = x.high || close;
+      const low = x.low || close;
+      const vol = x.volLot ?? 2000;
+      const ev = evaluateHLC(ga, x.avg, x.lot, high, low, close, vol, x.avgCount || 0);
+      return { x, i, ga, close, ev };
+    }).filter(item => {
+      if (homeFilter === 'all') return true;
+      return item.ev.action === homeFilter;
+    });
+
+    if (!items.length) {
+      listEl.innerHTML = `<p class="emp">Tidak ada posisi di kategori ini.</p>`;
+      return;
+    }
+
+    listEl.innerHTML = items.map(({ x, i, ga, close, ev }) => {
+      const tagCls = ev.action === 'tp' ? 'ok' : ev.action === 'avg' ? 'info' : 'wait';
+      const tagTxt = ev.action === 'tp' ? 'Done TP' : ev.action === 'avg' ? 'AVG 1×' : 'Jual Close';
+      const deltaCls = ev.pctClose >= 0 ? 'g' : 'b';
+      return `
+        <div class="list-item clickable" data-jump-port="${i}">
+          <div class="list-left">
+            <div class="list-code">
+              <span>${esc(x.k)}</span>
+              <span class="bdg ${tagCls}">${tagTxt}</span>
+              ${x.avgCount ? `<span class="bdg">Avg ${x.avgCount}×</span>` : ''}
+            </div>
+            <div class="list-sub">${nf.format(x.lot)} lot &middot; Avg ${fa(ga)} &middot; Target +2%: ${rp(ev.tp2Gross)}</div>
+          </div>
+          <div class="list-right">
+            <div class="list-price">${nf.format(close)}</div>
+            <div class="list-delta ${deltaCls}">${pcn(ev.pctClose)} (High ${pcn(ev.pctHigh)})</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  $('home-filter-pills').addEventListener('click', e => {
+    const btn = e.target.closest('button[data-hf]');
+    if (!btn) return;
+    homeFilter = btn.dataset.hf;
+    $('home-filter-pills').querySelectorAll('button').forEach(b => b.classList.toggle('on', b === btn));
+    renderHome();
+  });
+
+  $('home-pos-list').addEventListener('click', e => {
+    const row = e.target.closest('[data-jump-port]');
+    if (row) show('port', 0);
+  });
+
+  function renderHlcVerdictHtml(x, i) {
+    const ga = (x.g || x.lot * 100 * x.avg) / (x.lot * 100);
+    const close = x.close || x.now || Math.round(ga);
+    const high = x.high || close;
+    const low = x.low || close;
+    const vol = x.volLot ?? 2000;
+    const avgCount = x.avgCount || 0;
+    const ev = evaluateHLC(ga, x.avg, x.lot, high, low, close, vol, avgCount);
+    const rs = rate('S'), rb = rate('B');
+
+    if (ev.action === 'tp') {
+      const sellP = Math.max(ev.tp2Gross, high >= ev.tp2Net ? ev.tp2Net : ev.tp2Gross);
+      const estNet = x.lot * 100 * sellP * (1 - rs) - (x.lot * 100 * x.avg);
+      return `
+        <div class="verdict-box tp">
+          <div class="verdict-title g">${ev.title}</div>
+          <div>${ev.desc}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px">
+            <span class="num" style="font-weight:700">Est. Untung: +${rp(estNet)}</span>
+            <button type="button" class="btn btn-sell btn-sm" data-sell-tp="${i}">Done TP (${rp(sellP)})</button>
+          </div>
+        </div>
+      `;
+    }
+
+    if (ev.action === 'avg') {
+      const avgP = x.avgPriceCustom > 0 ? x.avgPriceCustom : (close > 0 ? close : low);
+      const addLot = x.avgLotCustom > 0 ? x.avgLotCustom : x.lot;
+      const prevCost = x.lot * 100 * x.avg;
+      const addCost = addLot * 100 * avgP * (1 + rb);
+      const newLot = x.lot + addLot;
+      const newGa = (x.g + addLot * 100 * avgP) / (newLot * 100);
+      const newNetAvg = (prevCost + addCost) / (newLot * 100);
+      const nextTp2 = tUp(newGa * 1.02);
+      const nextTp2Net = tUp(newNetAvg * 1.02 / (1 - rs));
+
+      return `
+        <div class="verdict-box avg">
+          <div class="verdict-title ac">${ev.title}</div>
+          <div style="margin-bottom:8px">${ev.desc}</div>
+          <div class="grid2" style="margin-bottom:8px">
+            <div>
+              <label>Harga Beli Avg (Rp)</label>
+              <input data-hlc-avgp="${i}" inputmode="numeric" value="${nf.format(avgP)}" style="height:34px;font-weight:700">
+            </div>
+            <div>
+              <label>Lot Avg (1&times;)</label>
+              <input data-hlc-avgl="${i}" inputmode="numeric" value="${nf.format(addLot)}" style="height:34px;font-weight:700">
+            </div>
+          </div>
+          <div class="r" style="padding:4px 0"><span>Avg baru (${nf.format(newLot)} lot)</span><b>${fa(newGa)}</b></div>
+          <div class="r" style="padding:4px 0;border:0"><span>Besok Target +2% (Bersih)</span><b class="g">${rp(nextTp2)} (${rp(nextTp2Net)})</b></div>
+          <div class="grid2" style="margin-top:8px">
+            <button type="button" class="btn btn-ghost btn-sm" data-avg-order="${i}">Kirim ke Order</button>
+            <button type="button" class="btn btn-sm" data-avg-exec="${i}">Eksekusi AVG 1&times;</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // Close exit (avgCount >= 1 and < 2%)
+    const estClose = x.lot * 100 * close * (1 - rs) - (x.lot * 100 * x.avg);
+    return `
+      <div class="verdict-box close">
+        <div class="verdict-title a">${ev.title}</div>
+        <div>${ev.desc}</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px">
+          <span class="num ${estClose >= 0 ? 'g' : 'b'}" style="font-weight:700">Hasil di Close: ${(estClose >= 0 ? '+' : '') + rp(estClose)}</span>
+          <button type="button" class="btn btn-warn btn-sm" data-sell-close="${i}">Jual di Close</button>
+        </div>
+      </div>
+    `;
+  }
+
+  function updateCardLive(i) {
+    const x = ST.pos[i];
+    if (!x) return;
+    const ga = (x.g || x.lot * 100 * x.avg) / (x.lot * 100);
+    const close = x.close || x.now || Math.round(ga);
+    const high = x.high || close;
+    const low = x.low || close;
+    const vol = x.volLot ?? 2000;
+    const ev = evaluateHLC(ga, x.avg, x.lot, high, low, close, vol, x.avgCount || 0);
+    const rs = rate('S');
+    const pl = x.lot * 100 * close * (1 - rs) - (x.lot * 100 * x.avg);
+
+    const pctEl = $(`hlc-pct-${i}`);
+    if (pctEl) {
+      pctEl.innerHTML = `High <b class="${ev.pctHigh >= 2 ? 'g' : ''}">${pcn(ev.pctHigh)}</b> &middot; Low <b class="b">${pcn(ev.pctLow)}</b> &middot; Close <b class="${pl >= 0 ? 'g' : 'b'}">${rp(pl)}</b>`;
+    }
+    const verEl = $(`hlc-ver-${i}`);
+    if (verEl) {
+      verEl.innerHTML = renderHlcVerdictHtml(x, i);
+    }
+  }
+
+  function rpos2() {
+    const box = $('pf'), ft = $('pft'), navBadge = $('nav-port-badge');
+    $('port-total-badge').textContent = `${ST.pos.length} Aktif`;
+    if (ST.pos.length > 0) {
+      navBadge.textContent = ST.pos.length;
+      navBadge.classList.remove('hide');
+    } else {
+      navBadge.classList.add('hide');
+    }
+
+    if (!ST.pos.length) {
+      box.innerHTML = `<div class="section-block"><p class="emp">Belum ada posisi aktif. Beli saham di menu <b>Order</b> untuk mulai evaluasi High / Low / Close.</p></div>`;
+      ft.classList.add('hide');
+      return;
+    }
+
+    ft.classList.remove('hide');
+    const rs = rate('S');
+    let tv = 0, tc = 0;
+
+    const filterSub = activeSub.port || 0;
+    const cards = ST.pos.map((x, i) => {
+      const ga = (x.g || x.lot * 100 * x.avg) / (x.lot * 100);
+      const close = x.close || x.now || Math.round(ga);
+      const high = x.high || close;
+      const low = x.low || close;
+      const vol = x.volLot ?? 2000;
+      const ev = evaluateHLC(ga, x.avg, x.lot, high, low, close, vol, x.avgCount || 0);
+      const cost = x.lot * 100 * x.avg;
+      const valNet = x.lot * 100 * close * (1 - rs);
+      tv += valNet;
+      tc += cost;
+      return { x, i, ga, high, low, close, vol, ev, cost, pl: valNet - cost };
+    }).filter(item => {
+      if (filterSub === 1) return item.ev.action === 'tp';
+      if (filterSub === 2) return item.ev.action === 'avg' || item.ev.action === 'close';
+      return true;
+    });
+
+    const totPl = tv - tc;
+    ft.innerHTML = `
+      <div class="stat-tile"><span class="k">Total Modal</span><span class="v">${rp(tc)}</span></div>
+      <div class="stat-tile"><span class="k">Nilai Close</span><span class="v">${rp(tv)}</span></div>
+      <div class="stat-tile"><span class="k">Floating P&amp;L</span><span class="v ${totPl >= 0 ? 'g' : 'b'}">${(totPl > 0 ? '+' : '') + rp(totPl)}</span></div>
+    `;
+
+    if (!cards.length) {
+      box.innerHTML = `<div class="section-block"><p class="emp">Tidak ada posisi yang sesuai filter tab ini.</p></div>`;
+      return;
+    }
+
+    box.innerHTML = cards.map(({ x, i, ga, high, low, close, vol, ev, pl }) => {
+      const avgStageBadge = (x.avgCount || 0) >= 1
+        ? `<span class="bdg info">Sudah AVG ${x.avgCount}×</span>`
+        : `<span class="bdg">Entry Awal</span>`;
+      return `
+        <div class="section-block">
+          <div class="list-item" style="padding-top:0">
+            <div class="list-left">
+              <div class="list-code">
+                <span>${esc(x.k)}</span>
+                ${avgStageBadge}
+              </div>
+              <div class="list-sub">${nf.format(x.lot)} lot &middot; Avg ${fa(ga)} &middot; Target +2%: <b class="g">${rp(ev.tp2Gross)}</b></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <button type="button" class="btn btn-ghost btn-sm" data-pick="${i}">Order</button>
+              <button type="button" class="btn btn-danger-outline btn-sm" data-del="${i}">Hapus</button>
+            </div>
+          </div>
+
+          <!-- High / Low / Close / Volume Inputs -->
+          <div class="grid2" style="margin-top:10px">
+            <div>
+              <label>High (Rp)</label>
+              <input data-hlc-high="${i}" inputmode="numeric" value="${nf.format(high)}" style="height:36px;font-weight:700">
+            </div>
+            <div>
+              <label>Low (Rp)</label>
+              <input data-hlc-low="${i}" inputmode="numeric" value="${nf.format(low)}" style="height:36px;font-weight:700">
+            </div>
+            <div>
+              <label>Close (Rp)</label>
+              <input data-hlc-close="${i}" inputmode="numeric" value="${nf.format(close)}" style="height:36px;font-weight:700">
+            </div>
+            <div>
+              <label>Volume (Lot · Acuan 2K)</label>
+              <input data-hlc-vol="${i}" inputmode="numeric" value="${nf.format(vol)}" style="height:36px;font-weight:700">
+            </div>
+          </div>
+
+          <div class="chips" style="margin-top:7px">
+            <button type="button" data-qvol="${i}:2500">Vol &ge; 2K (2.500)</button>
+            <button type="button" data-qvol="${i}:1200">Vol Kurang (1.200)</button>
+          </div>
+
+          <div id="hlc-pct-${i}" style="font-size:0.75rem;color:var(--text-muted);margin-top:8px" class="num">
+            High <b class="${ev.pctHigh >= 2 ? 'g' : ''}">${pcn(ev.pctHigh)}</b> &middot; Low <b class="b">${pcn(ev.pctLow)}</b> &middot; Close <b class="${pl >= 0 ? 'g' : 'b'}">${rp(pl)}</b>
+          </div>
+
+          <div id="hlc-ver-${i}">
+            ${renderHlcVerdictHtml(x, i)}
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // Portfolio live input updates WITHOUT re-rendering entire card (keeps keyboard focus!)
+  $('pf').addEventListener('input', e => {
+    const t = e.target;
+    if (t.dataset.hlcHigh !== undefined) {
+      const i = +t.dataset.hlcHigh;
+      ST.pos[i].high = num(t.value);
+      updateCardLive(i);
+    } else if (t.dataset.hlcLow !== undefined) {
+      const i = +t.dataset.hlcLow;
+      ST.pos[i].low = num(t.value);
+      updateCardLive(i);
+    } else if (t.dataset.hlcClose !== undefined) {
+      const i = +t.dataset.hlcClose;
+      const v = num(t.value);
+      ST.pos[i].close = v;
+      ST.pos[i].now = v;
+      updateCardLive(i);
+    } else if (t.dataset.hlcVol !== undefined) {
+      const i = +t.dataset.hlcVol;
+      ST.pos[i].volLot = num(t.value);
+      updateCardLive(i);
+    } else if (t.dataset.hlcAvgp !== undefined) {
+      const i = +t.dataset.hlcAvgp;
+      ST.pos[i].avgPriceCustom = num(t.value);
+    } else if (t.dataset.hlcAvgl !== undefined) {
+      const i = +t.dataset.hlcAvgl;
+      ST.pos[i].avgLotCustom = Math.max(1, Math.floor(num(t.value)));
+    }
+  });
+
+  $('pf').addEventListener('change', e => {
+    const t = e.target;
+    if (t.dataset.hlcHigh !== undefined || t.dataset.hlcLow !== undefined || t.dataset.hlcClose !== undefined || t.dataset.hlcVol !== undefined || t.dataset.hlcAvgp !== undefined || t.dataset.hlcAvgl !== undefined) {
+      save();
+      racc();
+      renderHome();
+      if (t.dataset.hlcAvgp !== undefined || t.dataset.hlcAvgl !== undefined) rpos2();
+    }
+  });
+
+  let dq = -1, dt;
+  $('pf').addEventListener('click', e => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    if (btn.dataset.qvol) {
+      const [i, v] = btn.dataset.qvol.split(':');
+      ST.pos[+i].volLot = +v;
+      save();
+      rpos2();
+      renderHome();
+      return;
+    }
+
+    if (btn.dataset.pick !== undefined) {
+      const p = ST.pos[+btn.dataset.pick];
+      $('kode').value = p.k;
+      $('price').value = nf.format(p.close || p.now || 0);
+      $('vol').value = nf.format(p.lot);
+      show('order', 0);
+      calc();
+      return;
+    }
+
+    if (btn.dataset.sellTp !== undefined) {
+      const idx = +btn.dataset.sellTp;
+      const p = ST.pos[idx];
+      const ga = (p.g || p.lot * 100 * p.avg) / (p.lot * 100);
+      const tp2 = tUp(ga * 1.02);
+      const high = p.high || tp2;
+      const sellP = Math.max(tp2, high >= tp2 ? tp2 : high);
+      openSellModal(idx, sellP, p.lot, 'Done TP +2%');
+      return;
+    }
+
+    if (btn.dataset.sellClose !== undefined) {
+      const idx = +btn.dataset.sellClose;
+      const p = ST.pos[idx];
+      const closeP = p.close || p.now || Math.round((p.g || p.lot * 100 * p.avg) / (p.lot * 100));
+      openSellModal(idx, closeP, p.lot, 'Jual di Close');
+      return;
+    }
+
+    if (btn.dataset.avgOrder !== undefined) {
+      const idx = +btn.dataset.avgOrder;
+      const x = ST.pos[idx];
+      const avgP = x.avgPriceCustom > 0 ? x.avgPriceCustom : (x.close || x.low || x.now);
+      const addLot = x.avgLotCustom > 0 ? x.avgLotCustom : x.lot;
+      $('kode').value = x.k;
+      $('price').value = nf.format(avgP);
+      $('vol').value = nf.format(addLot);
+      show('order', 0);
+      calc();
+      toast('Order AVG 1× siap. Periksa lalu tekan BUY');
+      return;
+    }
+
+    if (btn.dataset.avgExec !== undefined) {
+      const idx = +btn.dataset.avgExec;
+      const x = ST.pos[idx];
+      const avgP = x.avgPriceCustom > 0 ? x.avgPriceCustom : (x.close || x.low || x.now);
+      const addLot = x.avgLotCustom > 0 ? x.avgLotCustom : x.lot;
+      executeBuy(x.k, avgP, addLot, 'AVG 1×', x.volLot);
+      return;
+    }
+
+    if (btn.dataset.del !== undefined) {
+      const i = btn.dataset.del;
+      if (dq !== i) {
+        dq = i;
+        btn.textContent = 'Yakin?';
+        clearTimeout(dt);
+        dt = setTimeout(() => { dq = -1; btn.textContent = 'Hapus'; }, 3500);
+        return;
+      }
+      const x = ST.pos[+i];
+      ST.pos.splice(+i, 1);
+      ST.tx = ST.tx.filter(t => t.k !== x.k);
+      if (ST.lastGuide && ST.lastGuide.k === x.k) ST.lastGuide = null;
+      dq = -1;
+      save();
+      refresh();
+      toast(x.k + ' dihapus beserta transaksinya');
+    }
+  });
+
+  // ==================== QUICK SELL & CAPITAL MODALS ====================
+  function updateSellModalPreview() {
+    const idx = +$('ms-idx').value;
+    const p = ST.pos[idx];
+    if (!p) return;
+    const price = num($('ms-price').value);
+    const lot = Math.min(p.lot, Math.max(1, Math.floor(num($('ms-lot').value))));
+    const val = lot * 100 * price;
+    const f = fees(val, 'S');
+    const net = val - f.tot;
+    const basis = lot * 100 * p.avg;
+    const gl = net - basis;
+
+    $('ms-basis').textContent = rp(basis);
+    $('ms-net').textContent = rp(net);
+    const glEl = $('ms-gl');
+    glEl.textContent = (gl >= 0 ? '+' : '') + rp(gl) + ' (' + pcn(basis ? (gl / basis) * 100 : 0) + ')';
+    glEl.className = gl >= 0 ? 'g' : 'b';
+  }
+
+  function openSellModal(idx, price, lot, tag) {
+    const p = ST.pos[idx];
+    if (!p) return;
+    $('ms-idx').value = idx;
+    $('ms-tag').value = tag;
+    $('ms-title').textContent = `${tag} — ${p.k}`;
+    $('ms-price').value = nf.format(price);
+    $('ms-lot').value = nf.format(lot);
+    updateSellModalPreview();
+    $('modal-sell').classList.remove('hide');
+  }
+
+  $('ms-price').addEventListener('input', updateSellModalPreview);
+  $('ms-lot').addEventListener('input', updateSellModalPreview);
+  $('close-sell').onclick = () => $('modal-sell').classList.add('hide');
+  $('modal-sell').addEventListener('click', e => { if (e.target.id === 'modal-sell') $('modal-sell').classList.add('hide'); });
+
+  $('ms-to-order').onclick = () => {
+    const p = ST.pos[+$('ms-idx').value];
+    if (!p) return;
+    $('kode').value = p.k;
+    $('price').value = $('ms-price').value;
+    $('vol').value = $('ms-lot').value;
+    $('modal-sell').classList.add('hide');
+    show('order', 0);
+    calc();
+  };
+
+  $('ms-exec').onclick = () => {
+    const p = ST.pos[+$('ms-idx').value];
+    if (!p) return;
+    if (executeSell(p.k, num($('ms-price').value), Math.floor(num($('ms-lot').value)), $('ms-tag').value)) {
+      $('modal-sell').classList.add('hide');
+    }
+  };
+
+  function openCapModal() {
+    $('cap-input').value = ST.c0 ? nf.format(ST.c0) : '';
+    $('modal-cap').classList.remove('hide');
+    setTimeout(() => $('cap-input').focus(), 40);
+  }
+  $('btn-cash-quick').onclick = openCapModal;
+  $('btn-quick-capital').onclick = openCapModal;
+  $('close-cap').onclick = () => { pendingBuyAfterCap = false; $('modal-cap').classList.add('hide'); };
+  $('modal-cap').addEventListener('click', e => {
+    if (e.target.id === 'modal-cap') { pendingBuyAfterCap = false; $('modal-cap').classList.add('hide'); }
+  });
+  $('cap-chips').addEventListener('click', e => { if (e.target.dataset.val) $('cap-input').value = nf.format(+e.target.dataset.val); });
+  $('save-cap').onclick = () => {
+    const v = num($('cap-input').value);
+    if (v <= 0) { toast('Masukkan nominal modal awal > 0'); return; }
+    ST.c0 = v;
+    $('cash0').value = nf.format(v);
+    save();
+    refresh();
+    $('modal-cap').classList.add('hide');
+    toast('Modal awal disimpan: ' + rp(v));
+    if (pendingBuyAfterCap) {
+      pendingBuyAfterCap = false;
+      executeBuy(kd(), num($('price').value), Math.floor(num($('vol').value)));
+    }
+  };
+
+  // ==================== TRANSAKSI (GAIN/LOSS & HISTORY) ====================
+  const ds = t => new Date(t).toLocaleDateString('sv-SE').replace(/-/g, '/');
+
+  function rgl() {
+    const today = ds(Date.now());
+    const showAll = activeTab === 'gl' && activeSub.gl === 1;
+    const a = !showAll ? ST.tx.filter(x => ds(x.t) === today) : ST.tx;
+
+    const sells = a.filter(x => x.s === 'S');
+    const wins = sells.filter(x => x.gl > 0).length;
+    const netGl = sells.reduce((sum, x) => sum + x.gl, 0);
+    const wr = sells.length ? (wins / sells.length) * 100 : 0;
+
+    const netEl = $('gl-kpi-net');
+    netEl.textContent = (netGl > 0 ? '+' : '') + rp(netGl);
+    netEl.className = 'v ' + (netGl > 0 ? 'g' : netGl < 0 ? 'b' : '');
+    $('gl-kpi-wr').textContent = wr.toFixed(0) + '%';
+    $('gl-kpi-cnt').textContent = `${a.length} (${sells.length} Jual)`;
+
+    $('gl').innerHTML = a.length ? a.map(x => {
+      const v = x.s === 'S' ? x.gl : 0;
+      const c = v > 0 ? 'g' : v < 0 ? 'b' : 'a';
+      return `<tr>
+        <td><b>${esc(x.k)}</b></td>
+        <td>${ds(x.t)}</td>
+        <td class="${x.s === 'B' ? 'b' : 'g'}"><b>${x.s === 'B' ? 'Buy' : 'Sell'}</b></td>
+        <td class="${c}">${nf.format(Math.round(v))}</td>
+        <td class="${c}">${x.s === 'S' ? pcn(x.pct) : '0,00%'}</td>
+        <td><button type="button" class="xbtn" data-dtx="${ST.tx.indexOf(x)}">&times;</button></td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:20px">Belum ada transaksi</td></tr>';
+
+    const z = () => ({ lot: 0, val: 0, bf: 0, vat: 0, lv: 0, tax: 0 });
+    const B = z(), S = z();
+    let G = 0;
+    const allForFee = activeSub.gl === 2 ? ST.tx : a;
+    allForFee.forEach(x => {
+      const o = x.s === 'B' ? B : S;
+      o.lot += x.lot; o.val += x.val; o.bf += x.bf; o.vat += x.vat; o.lv += x.lv; o.tax += x.tax;
+      if (x.s === 'S') G += x.gl;
+    });
+
+    const L = [['Lot', 'lot'], ['Value', 'val'], ['Broker Fee', 'bf'], ['VAT', 'vat'], ['Levy', 'lv'], ['Income Tax', 'tax']];
+    $('bk').innerHTML = L.map(([n, k]) => `<tr><td>${n}</td><td>${nf.format(B[k])}</td><td>${nf.format(S[k])}</td><td>${nf.format(B[k] + S[k])}</td></tr>`).join('') +
+      `<tr><td>Total Gain/Loss</td><td></td><td></td><td class="${G > 0 ? 'g' : G < 0 ? 'b' : ''}"><b>${(G > 0 ? '+' : '') + nf.format(Math.round(G))}</b></td></tr>`;
+  }
+
+  function rhis() {
+    const H = {}, lab = new Map();
+    [...ST.tx].reverse().forEach(x => {
+      const h = H[x.k] || (H[x.k] = { lot: 0, g: 0 });
+      const pr = x.val / (x.lot * 100);
+      if (x.s === 'B') {
+        const av = h.lot ? h.g / (h.lot * 100) : 0;
+        const lbl = x.note || (!h.lot ? 'Entry' : pr <= av ? 'AVG 1×' : 'Add');
+        lab.set(x, [lbl, 'ac']);
+        h.g += x.val; h.lot += x.lot;
+      } else {
+        const lbl = x.note || (x.gl >= 0 ? 'Done TP' : 'Jual Close');
+        lab.set(x, [lbl, x.gl >= 0 ? 'g' : 'b']);
+        const f = h.lot ? x.lot / h.lot : 1;
+        h.g *= (1 - f); h.lot -= x.lot;
+      }
+    });
+
+    const a = HALL ? ST.tx : ST.tx.slice(0, 6);
+    $('hl').innerHTML = a.length ? a.map(x => {
+      const B = x.s === 'B';
+      const l = lab.get(x) || ['', ''];
+      const d = new Date(x.t).toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: '2-digit' });
+      return `<tr>
+        <td>${d}</td>
+        <td><span class="tag ${B ? 'tb' : 'ts'}">${B ? 'BUY' : 'SELL'}</span></td>
+        <td><b>${esc(x.k)}</b></td>
+        <td>${nf.format(Math.round(x.val / (x.lot * 100)))}</td>
+        <td>${nf.format(x.lot)}</td>
+        <td>${nf.format(x.val)}</td>
+        <td class="${l[1]}" style="font-weight:600">${esc(l[0])}</td>
+      </tr>`;
+    }).join('') : '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:20px">Belum ada transaksi</td></tr>';
+
+    $('hall').textContent = HALL ? 'Ringkas' : 'Lihat Semua';
+    $('hall').style.display = ST.tx.length > 6 ? '' : 'none';
+  }
+
+  $('hall').onclick = () => { HALL = !HALL; rhis(); };
+
+  let dq2 = -1, dt2;
+  $('gl').addEventListener('click', e => {
+    const b = e.target.closest('[data-dtx]');
+    if (!b) return;
+    const i = b.dataset.dtx;
+    if (dq2 !== i) {
+      dq2 = i; b.textContent = 'Hapus?';
+      clearTimeout(dt2);
+      dt2 = setTimeout(() => { dq2 = -1; b.innerHTML = '&times;'; }, 3500);
+      return;
+    }
+    const x = ST.tx[+i];
+    ST.tx.splice(+i, 1);
+    dq2 = -1;
+    rebuild();
+    save();
+    refresh();
+    toast('Transaksi ' + x.k + ' dihapus. Portofolio & cash dihitung ulang');
+  });
+
+  function rebuild() {
+    const old = {};
+    ST.pos.forEach(p => { old[p.k] = p; });
+    const P = {}, ok = [];
+    [...ST.tx].reverse().forEach(x => {
+      if (x.s === 'B') {
+        const cost = -x.cash;
+        const p = P[x.k] || (P[x.k] = {
+          k: x.k, lot: 0, avg: 0, g: 0,
+          now: x.val / (x.lot * 100),
+          high: x.val / (x.lot * 100),
+          low: x.val / (x.lot * 100),
+          close: x.val / (x.lot * 100),
+          volLot: 2000,
+          avgCount: -1
+        });
+        const tc = p.lot * 100 * p.avg + cost;
+        p.g += x.val; p.lot += x.lot;
+        p.avg = tc / (p.lot * 100);
+        const px = x.val / (x.lot * 100);
+        p.now = px; p.high = px; p.low = px; p.close = px;
+        p.avgCount += 1;
+        ok.push(x);
+      } else {
+        const p = P[x.k];
+        if (!p || p.lot < x.lot) return;
+        const basis = x.lot * 100 * p.avg;
+        x.gl = x.cash - basis;
+        x.pct = basis ? (x.gl / basis) * 100 : 0;
+        p.g *= (1 - x.lot / p.lot);
+        p.lot -= x.lot;
+        const px = x.val / (x.lot * 100);
+        p.now = px; p.close = px;
+        if (p.lot <= 0) delete P[x.k];
+        ok.push(x);
+      }
+    });
+    ST.tx = ok.reverse();
+    ST.pos = Object.values(P).map(p => {
+      if (old[p.k]) {
+        p.high = old[p.k].high || p.high;
+        p.low = old[p.k].low || p.low;
+        p.close = old[p.k].close || p.close;
+        p.now = p.close;
+        p.volLot = old[p.k].volLot ?? 2000;
+      }
+      return p;
+    });
+  }
+
+  $('btn-export-csv').onclick = () => {
+    if (!ST.tx.length) { toast('Belum ada transaksi untuk diekspor'); return; }
+    const hdr = ['Tanggal', 'Kode', 'Jenis', 'Lot', 'Harga', 'Nilai', 'Broker Fee', 'VAT', 'Levy', 'PPh', 'Net Cash', 'Gain/Loss', 'Return %', 'Keterangan'];
+    const q = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+    const rows = ST.tx.map(x => [
+      new Date(x.t).toLocaleString('id-ID'), x.k, x.s === 'B' ? 'BUY' : 'SELL',
+      x.lot, Math.round(x.val / (x.lot * 100)), x.val, x.bf, x.vat, x.lv, x.tax,
+      x.cash, x.s === 'S' ? Math.round(x.gl) : 0, x.s === 'S' ? x.pct.toFixed(2) : '0.00', x.note || ''
+    ].map(q).join(','));
+    const csv = '\uFEFF' + [hdr.map(q).join(','), ...rows].join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'jurnal-bsjp-hlc-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    toast('File CSV berhasil diunduh');
+  };
+
+  // ==================== ACCOUNT & DEMO ====================
+  function racc() {
+    const b = bal();
+    $('cash').value = nf.format(b.c);
+    $('lim').value = nf.format(b.l);
+    $('hc2').textContent = rp(b.c);
+    $('tlw').textContent = b.c < 0
+      ? 'Anda memakai trading limit, kewajiban ' + rp(-b.c) + '. Lunasi dalam T+2 lewat top up RDN atau jual saham di T+0.'
+      : '';
+    const emptyApp = !ST.c0 && !ST.pos.length && !ST.tx.length;
+    $('welcome-strip').classList.toggle('hide', !emptyApp);
+  }
+
+  function tcount() {
+    const t = ds(Date.now());
+    return ST.tx.filter(x => ds(x.t) === t).length;
+  }
+
+  function cnt() {
+    const n = tcount(), m = ST.mt || 3;
+    $('tcnt').textContent = n + '/' + m;
+  }
+
+  function lim() {
+    const n = tcount(), m = ST.mt || 3;
+    if (n < m || ov) return true;
+    ov = 1;
+    clearTimeout(ovt);
+    ovt = setTimeout(() => { ov = 0; }, 5000);
+    toast('Batas ' + m + ' transaksi hari ini tercapai. Ketuk lagi dalam 5 detik untuk lanjut');
+    return false;
+  }
+
+  const FM = { fb: 'b', fj: 'j', fv: 'v', fl: 'l', ft: 't' };
+  function loadInputs() {
+    $('mt').value = ST.mt || 3;
+    $('cash0').value = ST.c0 ? nf.format(ST.c0) : '';
+    $('hc').value = String(ST.h).replace('.', ',');
+    for (const id in FM) $(id).value = String(ST.f[FM[id]]).replace('.', ',');
+  }
+  loadInputs();
+
+  $('acc-preset').addEventListener('change', e => {
+    const v = e.target.value;
+    if (v === 'growin') ST.f = Object.assign({}, DF);
+    else if (v === 'std') ST.f = { b: 0.15, j: 0.15, v: 0, l: 0, t: 0.1 };
+    else if (v === 'ipot') ST.f = { b: 0.19, j: 0.19, v: 0, l: 0, t: 0.1 };
+    else return;
+    loadInputs();
+    save();
+    refresh();
+    toast('Preset fee diperbarui');
+  });
+
+  $('mt').addEventListener('input', () => { ST.mt = Math.max(1, Math.floor(num($('mt').value)) || 3); save(); cnt(); });
+  $('cash0').addEventListener('input', () => { ST.c0 = num($('cash0').value); save(); refresh(); });
+  $('cash0').addEventListener('blur', e => { if (ST.c0) e.target.value = nf.format(ST.c0); });
+  $('hc').addEventListener('input', () => { ST.h = num($('hc').value); save(); refresh(); });
+  for (const id in FM) {
+    $(id).addEventListener('input', () => {
+      ST.f[FM[id]] = num($(id).value);
+      $('acc-preset').value = 'custom';
+      save();
+      refresh();
+    });
+  }
+
+  ['price', 'vol'].forEach(id => $(id).addEventListener('blur', e => {
+    const v = num(e.target.value);
+    if (v) e.target.value = nf.format(v);
+  }));
+  ['kode', 'price', 'vol', 'pl', 'pc'].forEach(id => {
+    $(id).addEventListener('input', calc);
+    $(id).addEventListener('change', calc);
+  });
+
+  function loadDemoData() {
+    const now = Date.now();
+    const dayMs = 86400000;
+    const rs = rate('S');
+    ST.c0 = 30000000;
+
+    const tx = [];
+    // History 1: BRPT Done TP (+2% & Vol >= 2K)
+    const v1 = 50 * 100 * 1020, f1 = fees(v1, 'B'), c1 = v1 + f1.tot;
+    const sv1 = 50 * 100 * 1045, sf1 = fees(sv1, 'S'), net1 = sv1 - sf1.tot;
+    tx.push({ t: now - dayMs * 2 + 3600000, k: 'BRPT', s: 'S', lot: 50, val: sv1, bf: sf1.bf, vat: sf1.vat, lv: sf1.lv, tax: sf1.tax, cash: net1, gl: net1 - c1, pct: (net1 - c1) / c1 * 100, note: 'Done TP +2%' });
+    tx.push({ t: now - dayMs * 2, k: 'BRPT', s: 'B', lot: 50, val: v1, bf: f1.bf, vat: f1.vat, lv: f1.lv, tax: 0, cash: -c1, gl: 0, pct: 0, note: 'Entry' });
+
+    // History 2: ANTM AVG 1x -> besok tidak capai +2% -> Jual di Close
+    const v2a = 20 * 100 * 1540, f2a = fees(v2a, 'B'), c2a = v2a + f2a.tot;
+    const v2b = 20 * 100 * 1510, f2b = fees(v2b, 'B'), c2b = v2b + f2b.tot;
+    const sv2 = 40 * 100 * 1530, sf2 = fees(sv2, 'S'), net2 = sv2 - sf2.tot;
+    tx.push({ t: now - dayMs + 25200000, k: 'ANTM', s: 'S', lot: 40, val: sv2, bf: sf2.bf, vat: sf2.vat, lv: sf2.lv, tax: sf2.tax, cash: net2, gl: net2 - (c2a + c2b), pct: (net2 - (c2a + c2b)) / (c2a + c2b) * 100, note: 'Jual di Close' });
+    tx.push({ t: now - dayMs + 10800000, k: 'ANTM', s: 'B', lot: 20, val: v2b, bf: f2b.bf, vat: f2b.vat, lv: f2b.lv, tax: 0, cash: -c2b, gl: 0, pct: 0, note: 'AVG 1×' });
+    tx.push({ t: now - dayMs * 2, k: 'ANTM', s: 'B', lot: 20, val: v2a, bf: f2a.bf, vat: f2a.vat, lv: f2a.lv, tax: 0, cash: -c2a, gl: 0, pct: 0, note: 'Entry' });
+
+    // Active 1: BBRI (Entry Awal -> High >= +2% & Vol 2.8K -> Done TP!)
+    const v3 = 15 * 100 * 4620, f3 = fees(v3, 'B'), c3 = v3 + f3.tot;
+    tx.push({ t: now - 3600000, k: 'BBRI', s: 'B', lot: 15, val: v3, bf: f3.bf, vat: f3.vat, lv: f3.lv, tax: 0, cash: -c3, gl: 0, pct: 0, note: 'Entry' });
+
+    // Active 2: RAJA (Entry Awal -> High < 2% & Vol < 2K -> AVG Down 1x!)
+    const v4 = 20 * 100 * 2200, f4 = fees(v4, 'B'), c4 = v4 + f4.tot;
+    tx.push({ t: now - 7200000, k: 'RAJA', s: 'B', lot: 20, val: v4, bf: f4.bf, vat: f4.vat, lv: f4.lv, tax: 0, cash: -c4, gl: 0, pct: 0, note: 'Entry' });
+
+    // Active 3: ADRO (Sudah AVG 1x -> besoknya High < 2% -> Jual di Harga Close!)
+    const v5a = 15 * 100 * 3720, f5a = fees(v5a, 'B'), c5a = v5a + f5a.tot;
+    const v5b = 15 * 100 * 3640, f5b = fees(v5b, 'B'), c5b = v5b + f5b.tot;
+    tx.push({ t: now - 10800000, k: 'ADRO', s: 'B', lot: 15, val: v5b, bf: f5b.bf, vat: f5b.vat, lv: f5b.lv, tax: 0, cash: -c5b, gl: 0, pct: 0, note: 'AVG 1×' });
+    tx.push({ t: now - dayMs, k: 'ADRO', s: 'B', lot: 15, val: v5a, bf: f5a.bf, vat: f5a.vat, lv: f5a.lv, tax: 0, cash: -c5a, gl: 0, pct: 0, note: 'Entry' });
+
+    tx.sort((a, b) => b.t - a.t);
+    ST.tx = tx;
+    ST.pos = [];
+    rebuild();
+
+    const pBbri = ST.pos.find(x => x.k === 'BBRI');
+    if (pBbri) { pBbri.high = 4720; pBbri.low = 4610; pBbri.close = 4710; pBbri.now = 4710; pBbri.volLot = 2800; }
+    const pRaja = ST.pos.find(x => x.k === 'RAJA');
+    if (pRaja) { pRaja.high = 2220; pRaja.low = 2130; pRaja.close = 2140; pRaja.now = 2140; pRaja.volLot = 1400; }
+    const pAdro = ST.pos.find(x => x.k === 'ADRO');
+    if (pAdro) { pAdro.high = 3720; pAdro.low = 3650; pAdro.close = 3670; pAdro.now = 3670; pAdro.volLot = 1800; }
+
+    if (pBbri) {
+      const targetNet = tUp(pBbri.avg * 1.02 / (1 - rs));
+      const ga = pBbri.g / (pBbri.lot * 100);
+      ST.lastGuide = {
+        k: pBbri.k, lot: pBbri.lot, avg: pBbri.avg, ga,
+        targetGross: tUp(ga * 1.02), targetNet,
+        estProfit: pBbri.lot * 100 * targetNet * (1 - rs) - pBbri.lot * 100 * pBbri.avg,
+        isAvg: false, avgCount: 0, ts: now
+      };
+    }
+
+    loadInputs();
+    save();
+    refresh();
+    toast('Demo BSJP HLC dimuat! Cek tab Beranda & Portofolio');
+  }
+
+  $('btn-load-demo').onclick = loadDemoData;
+  $('btn-acc-demo').onclick = loadDemoData;
+
+  let rc = 0;
+  $('rst').onclick = () => {
+    if (!rc) {
+      rc = 1; $('rst').textContent = 'Ketuk lagi untuk hapus';
+      setTimeout(() => { rc = 0; $('rst').textContent = 'Hapus Semua Data'; }, 3500);
+      return;
+    }
+    ST = { c0: 0, h: 30, mt: 3, f: Object.assign({}, DF), pos: [], tx: [], lastGuide: null, theme: ST.theme, ts: Date.now() };
+    rc = 0; $('rst').textContent = 'Hapus Semua Data';
+    save(); loadInputs(); refresh();
+    toast('Semua data dihapus');
+  };
+
+  $('bkc').onclick = () => { const s = JSON.stringify(ST); $('bk2').value = s; copyText(s, 'Cadangan JSON disalin'); };
+  $('bkr').onclick = () => {
+    try {
+      const r = JSON.parse($('bk2').value);
+      if (!Array.isArray(r.pos) || !Array.isArray(r.tx)) throw 0;
+      ST = Object.assign({ c0: 0, h: 30, mt: 3, pos: [], tx: [], lastGuide: null, theme: 'light' }, r);
+      ST.f = Object.assign({}, DF, r.f || {});
+      applyTheme(ST.theme);
+      save(); loadInputs(); refresh();
+      toast('Data berhasil dipulihkan');
+    } catch (e) {
+      toast('Teks cadangan JSON tidak valid');
+    }
+  };
+
+  function refresh() {
+    racc();
+    calc();
+    renderGuides();
+    renderHome();
+    rpos2();
+    rgl();
+    rhis();
+    cnt();
+    if (activeTab === 'home' && activeSub.home === 1) updateStandaloneHlc();
+  }
+
+  renderSubtabs();
+  setInterval(() => cnt(), 60000);
+  refresh();
+  cloudInit();
+})();
+</script>
+</body>
+</html>
